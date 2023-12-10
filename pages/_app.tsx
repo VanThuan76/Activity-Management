@@ -1,7 +1,6 @@
 import { Shield } from '@/config/Shield';
 import { APP_THEME } from '@/constant/AppConstant';
 import useTheme from '@/hooks/useTheme';
-import DashboardLayout from '@/layouts/DashboardLayout';
 import { store } from '@/store/store';
 import { ConfigProvider } from 'antd';
 import type { NextPage } from 'next';
@@ -11,6 +10,7 @@ import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import '../styles/globals.css';
+import BlankLayout from '@/layouts/BlankLayout';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 2 } } });
 
@@ -34,7 +34,7 @@ const Boostrap = ({ children, getLayout }: { children: React.ReactElement, getLa
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
-    Component.getLayout ?? ((page) => <DashboardLayout>{page}</DashboardLayout>)
+    Component.getLayout ?? ((page) => <BlankLayout>{page}</BlankLayout>)
   return (
     <>
       <Head>
@@ -43,9 +43,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <Shield>
-            <Boostrap getLayout={getLayout}>
-              <Component {...pageProps} />
-            </Boostrap>
+                <Boostrap getLayout={getLayout}>
+                  <Component {...pageProps} />
+                </Boostrap>
           </Shield>
         </QueryClientProvider>
       </Provider>

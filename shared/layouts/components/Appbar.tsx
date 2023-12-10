@@ -8,7 +8,7 @@ import {
   NotificationOutlined,
   SearchOutlined,
   SettingOutlined
-} from '@ant-design/icons'
+} from '@ant-design/icons/lib/icons'
 import { Col, Dropdown, Input, MenuProps, Row, Switch } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { deleteCookie } from 'cookies-next'

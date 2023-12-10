@@ -1,10 +1,10 @@
-import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, InputRef, Space, theme } from 'antd';
 import { ColumnType } from 'antd/es/table';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import useTrans from './useTrans';
+import { SearchOutlined } from '@ant-design/icons/lib/icons';
 
 type Props = {
   apiFn?: Function
