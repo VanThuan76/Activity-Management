@@ -1,3 +1,7 @@
+export interface IFeedbackList {
+    feedbacks: IFeedback[];
+}
+
 export interface IFeedback {
     id: number;
     user_id: number;
