@@ -45,8 +45,8 @@ export default {
             pageTitle: "Server Error"
         },
         login: {
-            pageTitle: "ERPConnectAdmin - Login",
-            formHeader: "Login ERP Connect Admin",
+            pageTitle: "HVMS - Login",
+            formHeader: "Login to HUST Volunteer Management System",
             username : "Username",
             password : "Password",
             login : "Login",
