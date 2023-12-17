@@ -1,23 +1,24 @@
 import { AxiosResponse } from 'axios';
-import { https, httpsNoToken } from '../config/https.config';
-import { IUser } from '@/typeDefs/user.type';
+import { https } from '../config/https.config';
+import { IUser, IUserList } from '@/typeDefs/schema/user.type';
+import { IBaseResponse } from '@/typeDefs/baseReponse.type';
 
 
 class UserService {
-    getAllUser(): Promise<AxiosResponse<IUser[]>> {
-        return httpsNoToken.get('/admin/users')
+    getAllUser(): Promise<AxiosResponse<IBaseResponse<IUserList>>> {
+        return https.get('/admin/users')
     }
-    getUserById(id: number): Promise<AxiosResponse<IUser>> {
-        return httpsNoToken.get(`/User/${id}`)
+    getUserById(id: number): Promise<AxiosResponse<IBaseResponse<IUser>>> {
+        return https.get(`/admin/users/${id}`)
     }
     newUser(body: { username: string, password: string }) {
-        return httpsNoToken.post("/User", body)
+        return https.post("/register", body)
     }
     updateUser(id: number, body: { username: string, password: string }) {
-        return httpsNoToken.put(`/User/${id}`, body)
+        return https.put(`/admin/users/${id}`, body)
     }
     deleteUser(id: number) {
-        return httpsNoToken.delete(`/User/${id}`)
+        return https.delete(`/admin/users/${id}`)
     }
 }
 

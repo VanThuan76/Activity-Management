@@ -1,0 +1,72 @@
+"filename", "language", "JavaScript", "JSON with Comments", "CSS", "JSON", "TypeScript", "Markdown", "XML", "TypeScript JSX", "HTML", "Properties", "SCSS", "comment", "blank", "total"
+"e:\thesis\client\.env", "Properties", 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 8
+"e:\thesis\client\.eslintrc.json", "JSON", 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 3, 1, 56
+"e:\thesis\client\.prettierrc.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 18
+"e:\thesis\client\README.md", "Markdown", 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 15, 35
+"e:\thesis\client\next.config.js", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 16
+"e:\thesis\client\package-lock.json", "JSON", 0, 0, 0, 6264, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6265
+"e:\thesis\client\package.json", "JSON", 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 1, 50
+"e:\thesis\client\pages\403.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 1, 5, 29
+"e:\thesis\client\pages\404.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 1, 4, 28
+"e:\thesis\client\pages\500.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 1, 7, 32
+"e:\thesis\client\pages\_app.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 7, 57
+"e:\thesis\client\pages\activity\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"e:\thesis\client\pages\admin\organization\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"e:\thesis\client\pages\admin\request-organization\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"e:\thesis\client\pages\admin\skill\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"e:\thesis\client\pages\admin\user\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 108, 0, 0, 0, 0, 5, 113
+"e:\thesis\client\pages\admin\user\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 112, 0, 0, 0, 0, 4, 116
+"e:\thesis\client\pages\faq.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"e:\thesis\client\pages\feedback.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
+"e:\thesis\client\pages\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 3, 26
+"e:\thesis\client\pages\login.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, 4, 7, 107
+"e:\thesis\client\pages\settings.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 1, 43
+"e:\thesis\client\postcss.config.js", "JavaScript", 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"e:\thesis\client\public\index.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 23, 1, 44
+"e:\thesis\client\public\manifest.json", "JSON", 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 1, 26
+"e:\thesis\client\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4
+"e:\thesis\client\shared\config\Shield.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 16, 2, 36
+"e:\thesis\client\shared\config\https.config.ts", "TypeScript", 0, 0, 0, 0, 62, 0, 0, 0, 0, 0, 0, 3, 3, 68
+"e:\thesis\client\shared\constant\AppConstant.ts", "TypeScript", 0, 0, 0, 0, 72, 0, 0, 0, 0, 0, 0, 0, 6, 78
+"e:\thesis\client\shared\hooks\useFetchNotify.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 2, 40
+"e:\thesis\client\shared\hooks\useHeaderSearch.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 109, 0, 0, 0, 1, 4, 114
+"e:\thesis\client\shared\hooks\usePagination.ts", "TypeScript", 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 5, 3, 40
+"e:\thesis\client\shared\hooks\useRedux.ts", "TypeScript", 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"e:\thesis\client\shared\hooks\useSettings.ts", "TypeScript", 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 2, 5
+"e:\thesis\client\shared\hooks\useTableSetting.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 2, 24
+"e:\thesis\client\shared\hooks\useTheme.ts", "TypeScript", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 2, 12
+"e:\thesis\client\shared\hooks\useTrans.ts", "TypeScript", 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 2, 21
+"e:\thesis\client\shared\layouts\BlankLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 74, 0, 0, 0, 0, 4, 78
+"e:\thesis\client\shared\layouts\DashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 3, 46
+"e:\thesis\client\shared\layouts\components\Appbar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 119, 0, 0, 0, 7, 4, 130
+"e:\thesis\client\shared\layouts\components\FooterContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 3, 16
+"e:\thesis\client\shared\layouts\components\SiderMenu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 122, 0, 0, 0, 0, 6, 128
+"e:\thesis\client\shared\layouts\style.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 4, 22
+"e:\thesis\client\shared\localization\en.ts", "TypeScript", 0, 0, 0, 0, 106, 0, 0, 0, 0, 0, 0, 0, 5, 111
+"e:\thesis\client\shared\localization\vi.ts", "TypeScript", 0, 0, 0, 0, 106, 0, 0, 0, 0, 0, 0, 0, 4, 110
+"e:\thesis\client\shared\services\auth.service.ts", "TypeScript", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 5, 28
+"e:\thesis\client\shared\services\user.service.ts", "TypeScript", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 4, 25
+"e:\thesis\client\shared\store\appSlice.ts", "TypeScript", 0, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 1, 3, 50
+"e:\thesis\client\shared\store\store.ts", "TypeScript", 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 4, 15
+"e:\thesis\client\shared\typeDefs\UI_type\IColumn.type.ts", "TypeScript", 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"e:\thesis\client\shared\typeDefs\authen.type.ts", "TypeScript", 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 3, 43
+"e:\thesis\client\shared\typeDefs\baseReponse.type.ts", "TypeScript", 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 12
+"e:\thesis\client\shared\typeDefs\data.type.ts", "TypeScript", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"e:\thesis\client\shared\typeDefs\event.type.ts", "TypeScript", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 1, 21
+"e:\thesis\client\shared\typeDefs\role.type.ts", "TypeScript", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 1, 2, 24
+"e:\thesis\client\shared\typeDefs\route.type.ts", "TypeScript", 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 5, 49
+"e:\thesis\client\shared\typeDefs\user.type.ts", "TypeScript", 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 5, 46
+"e:\thesis\client\shared\utils\formValidator.ts", "TypeScript", 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 4, 42
+"e:\thesis\client\shared\utils\localStorage.ts", "TypeScript", 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 8, 55
+"e:\thesis\client\src\App.css", "CSS", 0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 39
+"e:\thesis\client\src\App.js", "JavaScript", 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 26
+"e:\thesis\client\src\App.test.js", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 9
+"e:\thesis\client\src\index.css", "CSS", 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14
+"e:\thesis\client\src\index.js", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 18
+"e:\thesis\client\src\logo.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1
+"e:\thesis\client\src\reportWebVitals.js", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14
+"e:\thesis\client\src\setupTests.js", "JavaScript", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 6
+"e:\thesis\client\styles\globals.css", "CSS", 0, 0, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 41
+"e:\thesis\client\tailwind.config.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 18
+"e:\thesis\client\tsconfig.json", "JSON with Comments", 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 27
+"Total", "-", 105, 20, 79, 6390, 791, 20, 5, 1079, 20, 8, 18, 86, 216, 8837

@@ -11,7 +11,7 @@ interface Props {
   setOpen: any
   refetch: any
 }
-const FormUser = ({ editId, open, setOpen, refetch }: Props) => {
+const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm()
   const isEditIdValidNumber = typeof editId === 'number'
   const registerMutation = useMutation({
@@ -143,4 +143,4 @@ const FormUser = ({ editId, open, setOpen, refetch }: Props) => {
   )
 }
 
-export default FormUser
+export default FormSkill

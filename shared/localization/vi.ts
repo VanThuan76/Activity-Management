@@ -45,8 +45,8 @@ export default {
             pageTitle: "Máy chủ xảy ra lỗi"
         },
         login: {
-            pageTitle: "ERPConnectAdmin - Đăng nhập",
-            formHeader: "Đăng nhập",
+            pageTitle: "Đăng nhập",
+            formHeader: "Đăng nhập ngay",
             username: "Tên tài khoản",
             password: "Mật khẩu",
             login: "Đăng nhập",

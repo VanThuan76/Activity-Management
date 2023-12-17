@@ -1,0 +1,130 @@
+Date : 2023-12-16 14:13:15
+Directory : e:\thesis\client
+Total : 70 files,  8535 codes, 86 comments, 216 blanks, all 8837 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          4 |      6,390 |          3 |          4 |      6,397 |
+| TypeScript JSX     |         24 |      1,079 |         31 |         83 |      1,193 |
+| TypeScript         |         23 |        791 |         12 |         77 |        880 |
+| JavaScript         |          9 |        105 |         10 |         17 |        132 |
+| CSS                |          3 |         79 |          0 |         15 |         94 |
+| JSON with Comments |          1 |         20 |          7 |          0 |         27 |
+| Markdown           |          1 |         20 |          0 |         15 |         35 |
+| HTML               |          1 |         20 |         23 |          1 |         44 |
+| SCSS               |          1 |         18 |          0 |          4 |         22 |
+| Properties         |          1 |          8 |          0 |          0 |          8 |
+| XML                |          2 |          5 |          0 |          0 |          5 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                            |         70 |      8,535 |         86 |        216 |      8,837 |
+| . (Files)                                                    |         10 |      6,463 |         13 |         24 |      6,500 |
+| pages                                                        |         15 |        521 |          7 |         53 |        581 |
+| pages (Files)                                                |          9 |        289 |          7 |         37 |        333 |
+| pages\activity                                               |          1 |          0 |          0 |          1 |          1 |
+| pages\admin                                                  |          5 |        232 |          0 |         15 |        247 |
+| pages\admin\organization                                     |          1 |          4 |          0 |          2 |          6 |
+| pages\admin\request-organization                             |          1 |          4 |          0 |          2 |          6 |
+| pages\admin\skill                                            |          1 |          4 |          0 |          2 |          6 |
+| pages\admin\user                                             |          2 |        220 |          0 |          9 |        229 |
+| public                                                       |          3 |         49 |         23 |          2 |         74 |
+| shared                                                       |         33 |      1,367 |         36 |        111 |      1,514 |
+| shared\config                                                |          2 |         80 |         19 |          5 |        104 |
+| shared\constant                                              |          1 |         72 |          0 |          6 |         78 |
+| shared\hooks                                                 |          8 |        238 |          6 |         20 |        264 |
+| shared\layouts                                               |          6 |        389 |          7 |         24 |        420 |
+| shared\layouts (Files)                                       |          3 |        135 |          0 |         11 |        146 |
+| shared\layouts\components                                    |          3 |        254 |          7 |         13 |        274 |
+| shared\localization                                          |          2 |        212 |          0 |          9 |        221 |
+| shared\services                                              |          2 |         44 |          0 |          9 |         53 |
+| shared\store                                                 |          2 |         55 |          3 |          7 |         65 |
+| shared\typeDefs                                              |          8 |        192 |          1 |         19 |        212 |
+| shared\typeDefs (Files)                                      |          7 |        188 |          1 |         17 |        206 |
+| shared\typeDefs\UI_type                                      |          1 |          4 |          0 |          2 |          6 |
+| shared\utils                                                 |          2 |         85 |          0 |         12 |         97 |
+| src                                                          |          8 |        101 |          7 |         19 |        127 |
+| styles                                                       |          1 |         34 |          0 |          7 |         41 |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                     | language           | code       | comment    | blank      | total      |
++--------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| e:\thesis\client\.env                                        | Properties         |          8 |          0 |          0 |          8 |
+| e:\thesis\client\.eslintrc.json                              | JSON               |         52 |          3 |          1 |         56 |
+| e:\thesis\client\.prettierrc.js                              | JavaScript         |         17 |          0 |          1 |         18 |
+| e:\thesis\client\README.md                                   | Markdown           |         20 |          0 |         15 |         35 |
+| e:\thesis\client\next.config.js                              | JavaScript         |         12 |          1 |          3 |         16 |
+| e:\thesis\client\package-lock.json                           | JSON               |      6,264 |          0 |          1 |      6,265 |
+| e:\thesis\client\package.json                                | JSON               |         49 |          0 |          1 |         50 |
+| e:\thesis\client\pages\403.tsx                               | TypeScript JSX     |         23 |          1 |          5 |         29 |
+| e:\thesis\client\pages\404.tsx                               | TypeScript JSX     |         23 |          1 |          4 |         28 |
+| e:\thesis\client\pages\500.tsx                               | TypeScript JSX     |         24 |          1 |          7 |         32 |
+| e:\thesis\client\pages\_app.tsx                              | TypeScript JSX     |         50 |          0 |          7 |         57 |
+| e:\thesis\client\pages\activity\[id].tsx                     | TypeScript JSX     |          0 |          0 |          1 |          1 |
+| e:\thesis\client\pages\admin\organization\index.tsx          | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| e:\thesis\client\pages\admin\request-organization\index.tsx  | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| e:\thesis\client\pages\admin\skill\index.tsx                 | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| e:\thesis\client\pages\admin\user\form.tsx                   | TypeScript JSX     |        108 |          0 |          5 |        113 |
+| e:\thesis\client\pages\admin\user\index.tsx                  | TypeScript JSX     |        112 |          0 |          4 |        116 |
+| e:\thesis\client\pages\faq.tsx                               | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| e:\thesis\client\pages\feedback.tsx                          | TypeScript JSX     |          4 |          0 |          1 |          5 |
+| e:\thesis\client\pages\index.tsx                             | TypeScript JSX     |         23 |          0 |          3 |         26 |
+| e:\thesis\client\pages\login.tsx                             | TypeScript JSX     |         96 |          4 |          7 |        107 |
+| e:\thesis\client\pages\settings.tsx                          | TypeScript JSX     |         42 |          0 |          1 |         43 |
+| e:\thesis\client\postcss.config.js                           | JavaScript         |          6 |          0 |          1 |          7 |
+| e:\thesis\client\public\index.html                           | HTML               |         20 |         23 |          1 |         44 |
+| e:\thesis\client\public\manifest.json                        | JSON               |         25 |          0 |          1 |         26 |
+| e:\thesis\client\public\vercel.svg                           | XML                |          4 |          0 |          0 |          4 |
+| e:\thesis\client\shared\config\Shield.tsx                    | TypeScript JSX     |         18 |         16 |          2 |         36 |
+| e:\thesis\client\shared\config\https.config.ts               | TypeScript         |         62 |          3 |          3 |         68 |
+| e:\thesis\client\shared\constant\AppConstant.ts              | TypeScript         |         72 |          0 |          6 |         78 |
+| e:\thesis\client\shared\hooks\useFetchNotify.tsx             | TypeScript JSX     |         38 |          0 |          2 |         40 |
+| e:\thesis\client\shared\hooks\useHeaderSearch.tsx            | TypeScript JSX     |        109 |          1 |          4 |        114 |
+| e:\thesis\client\shared\hooks\usePagination.ts               | TypeScript         |         32 |          5 |          3 |         40 |
+| e:\thesis\client\shared\hooks\useRedux.ts                    | TypeScript         |          5 |          0 |          3 |          8 |
+| e:\thesis\client\shared\hooks\useSettings.ts                 | TypeScript         |          3 |          0 |          2 |          5 |
+| e:\thesis\client\shared\hooks\useTableSetting.tsx            | TypeScript JSX     |         22 |          0 |          2 |         24 |
+| e:\thesis\client\shared\hooks\useTheme.ts                    | TypeScript         |         10 |          0 |          2 |         12 |
+| e:\thesis\client\shared\hooks\useTrans.ts                    | TypeScript         |         19 |          0 |          2 |         21 |
+| e:\thesis\client\shared\layouts\BlankLayout.tsx              | TypeScript JSX     |         74 |          0 |          4 |         78 |
+| e:\thesis\client\shared\layouts\DashboardLayout.tsx          | TypeScript JSX     |         43 |          0 |          3 |         46 |
+| e:\thesis\client\shared\layouts\components\Appbar.tsx        | TypeScript JSX     |        119 |          7 |          4 |        130 |
+| e:\thesis\client\shared\layouts\components\FooterContent.tsx | TypeScript JSX     |         13 |          0 |          3 |         16 |
+| e:\thesis\client\shared\layouts\components\SiderMenu.tsx     | TypeScript JSX     |        122 |          0 |          6 |        128 |
+| e:\thesis\client\shared\layouts\style.module.scss            | SCSS               |         18 |          0 |          4 |         22 |
+| e:\thesis\client\shared\localization\en.ts                   | TypeScript         |        106 |          0 |          5 |        111 |
+| e:\thesis\client\shared\localization\vi.ts                   | TypeScript         |        106 |          0 |          4 |        110 |
+| e:\thesis\client\shared\services\auth.service.ts             | TypeScript         |         23 |          0 |          5 |         28 |
+| e:\thesis\client\shared\services\user.service.ts             | TypeScript         |         21 |          0 |          4 |         25 |
+| e:\thesis\client\shared\store\appSlice.ts                    | TypeScript         |         46 |          1 |          3 |         50 |
+| e:\thesis\client\shared\store\store.ts                       | TypeScript         |          9 |          2 |          4 |         15 |
+| e:\thesis\client\shared\typeDefs\UI_type\IColumn.type.ts     | TypeScript         |          4 |          0 |          2 |          6 |
+| e:\thesis\client\shared\typeDefs\authen.type.ts              | TypeScript         |         40 |          0 |          3 |         43 |
+| e:\thesis\client\shared\typeDefs\baseReponse.type.ts         | TypeScript         |         12 |          0 |          0 |         12 |
+| e:\thesis\client\shared\typeDefs\data.type.ts                | TypeScript         |         10 |          0 |          1 |         11 |
+| e:\thesis\client\shared\typeDefs\event.type.ts               | TypeScript         |         20 |          0 |          1 |         21 |
+| e:\thesis\client\shared\typeDefs\role.type.ts                | TypeScript         |         21 |          1 |          2 |         24 |
+| e:\thesis\client\shared\typeDefs\route.type.ts               | TypeScript         |         44 |          0 |          5 |         49 |
+| e:\thesis\client\shared\typeDefs\user.type.ts                | TypeScript         |         41 |          0 |          5 |         46 |
+| e:\thesis\client\shared\utils\formValidator.ts               | TypeScript         |         38 |          0 |          4 |         42 |
+| e:\thesis\client\shared\utils\localStorage.ts                | TypeScript         |         47 |          0 |          8 |         55 |
+| e:\thesis\client\src\App.css                                 | CSS                |         33 |          0 |          6 |         39 |
+| e:\thesis\client\src\App.js                                  | JavaScript         |         23 |          0 |          3 |         26 |
+| e:\thesis\client\src\App.test.js                             | JavaScript         |          7 |          0 |          2 |          9 |
+| e:\thesis\client\src\index.css                               | CSS                |         12 |          0 |          2 |         14 |
+| e:\thesis\client\src\index.js                                | JavaScript         |         12 |          3 |          3 |         18 |
+| e:\thesis\client\src\logo.svg                                | XML                |          1 |          0 |          0 |          1 |
+| e:\thesis\client\src\reportWebVitals.js                      | JavaScript         |         12 |          0 |          2 |         14 |
+| e:\thesis\client\src\setupTests.js                           | JavaScript         |          1 |          4 |          1 |          6 |
+| e:\thesis\client\styles\globals.css                          | CSS                |         34 |          0 |          7 |         41 |
+| e:\thesis\client\tailwind.config.js                          | JavaScript         |         15 |          2 |          1 |         18 |
+| e:\thesis\client\tsconfig.json                               | JSON with Comments |         20 |          7 |          0 |         27 |
+| Total                                                        |                    |      8,535 |         86 |        216 |      8,837 |
++--------------------------------------------------------------+--------------------+------------+------------+------------+------------+

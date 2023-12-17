@@ -4,11 +4,11 @@ import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
 import { useState } from 'react'
 import FormUser from './form'
-import { IUser } from '@/typeDefs/user.type'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
 import { userService } from '@/services/user.service'
 import React from 'react'
+import { IUser, IUserList } from '@/typeDefs/schema/user.type'
 
 type Props = {}
 
@@ -79,7 +79,7 @@ const UserManagement = ({}: Props) => {
 
   return (
     <>
-      {dataUser && (
+      {dataUser && dataUser.data.data && (
         <React.Fragment>
           <Row justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
@@ -100,7 +100,7 @@ const UserManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataUser.data} columns={columns} />
+          <Table dataSource={dataUser.data.data.users} columns={columns} />
           {action === 'create' && !rowId ? (
             <FormUser refetch={refetch} open={open} setOpen={setOpen} />
           ) : (

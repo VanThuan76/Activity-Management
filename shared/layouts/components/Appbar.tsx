@@ -85,14 +85,14 @@ const Appbar = () => {
       </Col>
       <Col flex='1' span='5'>
         <Row>
-          <Col span={6}>
+          <Col span={12}>
             <Dropdown>
               <div style={{ fontSize: '24px' }}>
                 <BellOutlined />
               </div>
             </Dropdown>
           </Col>
-          <Col span={6} className='flex items-center cursor-pointer'>
+          {/* <Col span={6} className='flex items-center cursor-pointer'>
             <Dropdown menu={{ items: langDropdownItems }}>
               {lang === 'en' ? (
                 <US title='United States' style={{ width: '24px', height: '24px' }} />
@@ -100,8 +100,8 @@ const Appbar = () => {
                 <VN title='VietNam' style={{ width: '24px', height: '24px' }} />
               )}
             </Dropdown>
-          </Col>
-          <Col style={{ cursor: 'pointer' }} span={6}>
+          </Col> */}
+          <Col style={{ cursor: 'pointer' }} span={12}>
             <Dropdown menu={{ items }}>
               <div className='h-full text-2xl flex items-center justify-center'>
                 <img
