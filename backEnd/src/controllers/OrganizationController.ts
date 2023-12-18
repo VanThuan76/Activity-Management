@@ -66,7 +66,7 @@ export const createOrganization = async (
       if (result) {
         const response: GeneralResponse<{}> = {
           status: 200,
-          data: null,
+          data: result,
           message: "Create successfull",
         };
         commonResponse(req, res, response);

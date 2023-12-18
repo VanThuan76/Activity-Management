@@ -17,6 +17,9 @@ class UserService {
     updateUser(id: number, body: { username: string, password: string }) {
         return https.put(`/admin/users/${id}`, body)
     }
+    updateProfile(body: IUser) {
+        return https.put(`/user`, body)
+    }
     deleteUser(id: number) {
         return https.delete(`/admin/users/${id}`)
     }

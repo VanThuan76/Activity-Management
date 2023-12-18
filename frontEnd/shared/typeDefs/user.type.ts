@@ -1,4 +1,5 @@
 export interface IUser {
+    id: string
     userName: string
     role : string
     [key: string]: any

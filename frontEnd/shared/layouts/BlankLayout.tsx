@@ -1,10 +1,9 @@
 import {
   BellOutlined,
-  ShoppingCartOutlined,
   ContactsOutlined,
   QuestionCircleOutlined,
-  ApartmentOutlined,
-  ExpandAltOutlined
+  ExpandAltOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import { Button, Layout, Menu, MenuProps } from 'antd'
 import React, { useState } from 'react'
@@ -27,6 +26,7 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
   const handleLogout = () => {
     deleteCookie(APP_SAVE_KEYS.KEYS)
     deleteCookie(APP_SAVE_KEYS.ROLE)
+    router.push("/login")
   }
   const APP_WEBSITE_MENU: MenuProps['items'] = [
     {
@@ -67,10 +67,15 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
             enterButton
           />
           <div className='flex justify-end items-center gap-4'>
-            <BellOutlined />
-            <ShoppingCartOutlined />
+            {user && <UserOutlined onClick={() => router.push('/profile')} />}
             {!user && <Button onClick={() => router.push('/login')}>Đăng nhập</Button>}
             {user && Number(user?.role) === 3 && <Button onClick={() => router.push('/admin/user')}>ADMIN</Button>}
+            {user && Number(user?.role) === 2 && (
+              <Button onClick={() => router.push('/organizer/activity')}>TỔ CHỨC</Button>
+            )}
+            {user && Number(user?.role) === 1 && (
+              <Button onClick={() => router.push('/request_organization')}>Trở thành tổ chức</Button>
+            )}
             {user && <Button onClick={() => handleLogout()}>Đăng xuất</Button>}
           </div>
         </div>

@@ -29,7 +29,8 @@ const Login = ({}: Props) => {
         dispatch(
           login({
             role: decodeData.role_id,
-            userName: decodeData.username
+            userName: decodeData.username,
+            id: decodeData.id
           })
         )
         message.success('Đăng nhập thành công')
@@ -45,7 +46,7 @@ const Login = ({}: Props) => {
     const role = getCookie(APP_SAVE_KEYS.ROLE)
     if (typeof key === 'string' && role) {
       const decodeData: any = jwt_decode(key)
-      dispatch(login({ userName: decodeData.username, role: decodeData.role_id }))
+      dispatch(login({ userName: decodeData.username, role: decodeData.role_id, id: decodeData.id }))
       router.push("/")
     }
   }, [])
