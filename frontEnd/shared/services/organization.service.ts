@@ -1,15 +1,20 @@
 import { AxiosResponse } from 'axios'
 import { https, httpsNoToken } from '../config/https.config'
 import { IBaseResponse } from '@/typeDefs/baseReponse.type'
-import { IOrganization } from '@/typeDefs/schema/organization.type'
+import {
+  IOrganization,
+  IOrganizations,
+  IRequestOrganization,
+  IRequestOrganizations
+} from '@/typeDefs/schema/organization.type'
 
 class OrganizationService {
-  // getAllOrganization(): Promise<AxiosResponse<IBaseResponse<IOrganizations>>> {
-  //     return httpsNoToken.get('/Organizations')
-  // }
-  // getUserById(id: number): Promise<AxiosResponse<IBaseResponse<IUser>>> {
-  //     return https.get(`/admin/users/${id}`)
-  // }
+  getAllOrganization(): Promise<AxiosResponse<IBaseResponse<IOrganizations>>> {
+    return httpsNoToken.get('/organizations')
+  }
+  getOrganizationById(id: number): Promise<AxiosResponse<IBaseResponse<IOrganization>>> {
+    return https.get(`/organization/${id}`)
+  }
   newOrganization(body: {
     name: string
     location: string
@@ -20,9 +25,15 @@ class OrganizationService {
   requestBecomeOrganization(body: { organization_id: number }) {
     return https.post('/request_organization', body)
   }
-  // updateUser(id: number, body: { username: string, password: string }) {
-  //     return https.put(`/admin/users/${id}`, body)
-  // }
+  updateOrganization(id: number, body: { name: string; location: string; description: string }) {
+    return https.put(`/admin/organizations/${id}`, body)
+  }
+  getAllRequestOrganization(): Promise<AxiosResponse<IBaseResponse<IRequestOrganizations>>> {
+    return https.get('/admin/request_organization')
+  }
+  updateRequestOrganization(body: { organization_id: number; status: number }) {
+    return https.put('/admin/update_request_organization', body)
+  }
   // deleteUser(id: number) {
   //     return https.delete(`/admin/users/${id}`)
   // }

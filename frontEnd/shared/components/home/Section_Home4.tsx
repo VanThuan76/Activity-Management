@@ -1,28 +1,13 @@
-import { useAppSelector } from '@/hooks/useRedux'
-import { activityService } from '@/services/activity.service'
 import { IActivity } from '@/typeDefs/schema/activity.type'
-import { Avatar, Button, Card, message } from 'antd'
+import { Avatar, Button, Card } from 'antd'
+import { useRouter } from 'next/router'
 import React from 'react'
-import { useMutation } from 'react-query'
 const { Meta } = Card
 type Props = {
   activities: IActivity[] | undefined
 }
 const Section_Home4 = ({ activities }: Props) => {
-  const { user } = useAppSelector(state => state.appSlice)
-  const applyActivityMutation = useMutation({
-    mutationKey: 'applyActivity',
-    mutationFn: (body: { activity_id: number }) => activityService.applyActivity(body),
-    onSuccess(data, _variables, _context) {
-      if (data) {
-        message.success('Đăng ký thành công')
-      }
-    },
-    onError(error, variables, context) {
-      message.error('Đăng ký không thành công')
-    }
-  })
-
+  const router = useRouter()
   return (
     <React.Fragment>
       <div className='mt-5 flex flex-col justify-center items-center'>
@@ -37,12 +22,8 @@ const Section_Home4 = ({ activities }: Props) => {
                 title={item.name}
                 description={
                   <div className='flex justify-between items-center'>
-                    <p>{item.description}</p>
-                    {user && (
-                      <Button onClick={() => applyActivityMutation.mutate({ activity_id: item.id })}>
-                        Đăng ký tham gia
-                      </Button>
-                    )}
+                    <p>{item.creator}</p>
+                    <Button onClick={() => router.push(`/activity/${item.id}`)}>Xem chi tiết</Button>
                   </div>
                 }
               />

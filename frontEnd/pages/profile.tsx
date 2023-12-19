@@ -108,7 +108,13 @@ const Profile = ({ next }: Props) => {
           </Form.Item>
 
           <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
-            <Select placeholder='select one skills' defaultValue={['']} optionLabelProp='label' options={skills} />
+            <Select
+              mode='multiple'
+              placeholder='select one skills'
+              defaultValue={['']}
+              optionLabelProp='label'
+              options={skills}
+            />
           </Form.Item>
 
           <Form.Item style={{ textAlign: 'center' }}>

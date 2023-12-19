@@ -10,6 +10,7 @@ import {
 } from "../../models/organization_request";
 import { Users } from "../../models/users";
 import { Organization } from "../../models/organization";
+import { requestOrganizationMapper } from "../../mapper/RequestOrganizationMapper";
 dotenv.config();
 
 export const listRequestOrganization = async (
@@ -17,13 +18,19 @@ export const listRequestOrganization = async (
   res: Response
 ): Promise<void> => {
   try {
-    const requestOrganizations = await OrganizationRequest.findAll();
+    const requestOrganizationsCurrent = await OrganizationRequest.findAll();
+    const requestOrganizations = await Promise.all(
+      await requestOrganizationMapper(requestOrganizationsCurrent)
+    );
     if (requestOrganizations.length > 0) {
       const response: GeneralResponse<{
         requestOrganizations: OrganizationRequestAttributes[];
       }> = {
         status: 200,
-        data: { requestOrganizations },
+        data: {
+          requestOrganizations:
+            requestOrganizations as unknown as OrganizationRequestAttributes[],
+        },
         message: "Get list request organizations successfully",
       };
       commonResponse(req, res, response);
@@ -78,15 +85,15 @@ export const updateRequestOrganization = async (
           }
         }
       }
-    } else if(checkStatus === 2) {
+    } else if (checkStatus === 2) {
       const body = { status: 2, updated_at: new Date() };
       const organizationRequestRecord = await OrganizationRequest.findByPk(
         organizationId
       );
-      const organization = await Organization.findByPk(organizationId)
+      const organization = await Organization.findByPk(organizationId);
       if (organizationRequestRecord && organization) {
         const result = await organizationRequestRecord.update(body);
-        await organization.update({status: 1})
+        await organization.update({ status: 1 });
         if (result) {
           const response: GeneralResponse<{}> = {
             status: 200,

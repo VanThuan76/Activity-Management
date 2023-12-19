@@ -21,7 +21,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
         const role = getCookie(APP_SAVE_KEYS.ROLE)
         if (typeof key === 'string' && role) {
             const decodeData: any = jwt_decode(key)
-            dispatch(login({ userName: decodeData.preferred_username, role: decodeData.role }))
+            dispatch(login({ userName: decodeData.username, role: decodeData.role_id, id: decodeData.id }))
         }
     }, [])
     return (

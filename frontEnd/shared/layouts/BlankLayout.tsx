@@ -27,6 +27,7 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
     deleteCookie(APP_SAVE_KEYS.KEYS)
     deleteCookie(APP_SAVE_KEYS.ROLE)
     router.push("/login")
+    window.location.reload();
   }
   const APP_WEBSITE_MENU: MenuProps['items'] = [
     {

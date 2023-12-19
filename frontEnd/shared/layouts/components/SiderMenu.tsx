@@ -1,38 +1,26 @@
-import { IDataMenu } from '@/typeDefs/route.type'
-import { AuditOutlined, CalendarOutlined, ClusterOutlined, HomeOutlined, LockOutlined, MonitorOutlined, PullRequestOutlined, StarOutlined, UserAddOutlined } from '@ant-design/icons'
+import { useAppSelector } from '@/hooks/useRedux'
+import {
+  AuditOutlined,
+  CalendarOutlined,
+  ClusterOutlined,
+  HomeOutlined,
+  MonitorOutlined,
+  PullRequestOutlined,
+  StarOutlined,
+  UserAddOutlined
+} from '@ant-design/icons'
 import { Layout, Menu, MenuProps, Typography, theme } from 'antd'
 import { useRouter } from 'next/router'
-import user from 'pages/admin/user'
 import React, { useState } from 'react'
-
 const { Sider } = Layout
-
 type MenuItem = Required<MenuProps>['items'][number]
 
-function getItem({
-  label,
-  key,
-  icon,
-  children
-}: {
-  label: React.ReactNode
-  key: React.Key
-  icon?: React.ReactNode
-  children?: MenuItem[]
-}): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label
-  } as MenuItem
-}
-
 const SiderMenu = () => {
+  const { user } = useAppSelector(state => state.appSlice)
   const { token } = theme.useToken()
   const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
-  const menu = [
+  const menuAdmin = [
     {
       key: '/',
       label: 'Trang chủ',
@@ -81,6 +69,40 @@ const SiderMenu = () => {
       ]
     }
   ]
+  const menuOrganizer = [
+    {
+      key: '/',
+      label: 'Trang chủ',
+      icon: <HomeOutlined />
+    },
+    {
+      key: '/organizer',
+      icon: <AuditOutlined />,
+      label: 'Ban tổ chức',
+      children: [
+        {
+          key: '/organizer/activity',
+          icon: <CalendarOutlined />,
+          label: 'Quản lý hoạt động'
+        },
+        {
+          key: '/organizer/apply-activity',
+          icon: <MonitorOutlined />,
+          label: 'Quản lý yêu cầu/hoạt động'
+        },
+        {
+          key: '/organizer/feedback',
+          icon: <StarOutlined />,
+          label: 'Quản lý đánh giá'
+        },
+        {
+          key: '/organizer/request-volunteer',
+          icon: <PullRequestOutlined />,
+          label: 'Quản lý yêu cầu/tình nguyện viên'
+        }
+      ]
+    }
+  ]
   return (
     <Sider
       style={{ backgroundColor: token.colorBgBase }}
@@ -115,7 +137,7 @@ const SiderMenu = () => {
         style={{ backgroundColor: token.colorBgBase }}
         defaultSelectedKeys={[router.pathname]}
         mode='inline'
-        items={menu}
+        items={user && +user?.role === 2 ? menuOrganizer : menuAdmin}
         onClick={menu => {
           router.push(menu.key)
         }}

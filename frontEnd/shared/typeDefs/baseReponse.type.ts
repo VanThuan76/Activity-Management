@@ -10,3 +10,8 @@ export interface IRequestParam {
     pageIndex?: number,
     [key: string]: any
 }
+
+export interface ICreator {
+    name: string,
+    avatar: string
+}

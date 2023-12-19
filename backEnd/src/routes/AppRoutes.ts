@@ -4,8 +4,8 @@ import { deleteUser, getUserById, listUser, updateUser } from "../controllers/Ad
 import { authenticateToken } from "../middleware/jwtMiddleware";
 import { checkRoleAdmin, checkRoleOrganizer } from "../middleware/checkRole";
 import { detailUser, updateProfile } from "../controllers/UserController";
-import { createOrganization, listOrganization } from "../controllers/OrganizationController";
-import { deleteOrganization } from "../controllers/Admin/OrganizationController";
+import { createOrganization, detailOrganization, listOrganization } from "../controllers/OrganizationController";
+import { deleteOrganization, updateOrganization } from "../controllers/Admin/OrganizationController";
 import { requestOrganization } from "../controllers/RequestOrganizationController";
 import { listRequestOrganization, updateRequestOrganization } from "../controllers/Admin/RequestOrganizationController";
 import { requestVolunteer } from "../controllers/RequestVolunteerController";
@@ -37,6 +37,7 @@ router.post("/api/v1/reset_password", resetPassword);
         router.delete("/api/v1/admin/users/:id", authenticateToken, checkRoleAdmin, deleteUser);
     //Organization
         router.delete("/api/v1/admin/organizations/:id", authenticateToken, checkRoleAdmin, deleteOrganization);
+        router.put("/api/v1/admin/organizations/:id", authenticateToken, checkRoleAdmin, updateOrganization);
     //Request Organization
         router.get("/api/v1/admin/request_organization", authenticateToken, checkRoleAdmin, listRequestOrganization);
         router.put("/api/v1/admin/update_request_organization", authenticateToken, checkRoleAdmin, updateRequestOrganization);
@@ -70,6 +71,7 @@ router.put("/api/v1/user", authenticateToken, updateProfile);
 router.get("/api/v1/user", authenticateToken, detailUser);
 //Organization
 router.get("/api/v1/organizations", listOrganization);
+router.get("/api/v1/organization/:id", detailOrganization);
 router.post("/api/v1/create_organization", authenticateToken, createOrganization);
 //Request Organization
 router.post("/api/v1/request_organization", authenticateToken, requestOrganization);

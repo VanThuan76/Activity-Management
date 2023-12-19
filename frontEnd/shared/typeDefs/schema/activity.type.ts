@@ -1,10 +1,12 @@
+import { IFeedback } from "./feedback.type";
+
 export interface IActivityList {
   activities: IActivity[];
 }
 
 export interface IActivity {
   id: number;
-  creator: number;
+  creator: string;
   name: string;
   description: string;
   image: string
@@ -13,4 +15,5 @@ export interface IActivity {
   status: number;
   created_at: string;
   updated_at: string;
+  feedback?: IFeedback[]
 }

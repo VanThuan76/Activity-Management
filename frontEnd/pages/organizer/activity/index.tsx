@@ -1,18 +1,23 @@
-import { DeleteOutlined } from '@ant-design/icons'
-import { Col, Image, message, Popconfirm, Row, Space, Table } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { Col, message, Popconfirm, Row, Space, Table } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
 import { userService } from '@/services/user.service'
-import React from 'react'
-import { activityService } from '@/services/activity.service'
-import { IActivity } from '@/typeDefs/schema/activity.type'
+import React, { useState } from 'react'
+import { organizationService } from '@/services/organization.service'
+import { IOrganization } from '@/typeDefs/schema/organization.type'
+import FormOrganization from './form'
 
 type Props = {}
 
-const FeedbackManagement = ({}: Props) => {
-  const { data: dataFeedback, refetch } = useQuery(['listFeedback'], () => activityService.getAllActivity())
+const OrganizationManagement = ({}: Props) => {
+  const [open, setOpen] = useState(false)
+  const [rowId, setRowId] = useState<number>()
+  const { data: dataOrganization, refetch } = useQuery(['listOrganization'], () =>
+    organizationService.getAllOrganization()
+  )
   const deleteMutation = useMutation({
     mutationKey: ['deleteMutation'],
     mutationFn: (userId: number) => userService.deleteUser(userId),
@@ -24,7 +29,7 @@ const FeedbackManagement = ({}: Props) => {
       message.error('Xoá không thành công')
     }
   })
-  const columns: ColumnType<IActivity>[] = [
+  const columns: ColumnType<IOrganization>[] = [
     {
       title: '#',
       key: 'id',
@@ -45,35 +50,40 @@ const FeedbackManagement = ({}: Props) => {
       key: 'description'
     },
     {
-      title: 'Địa điểm',
+      title: 'Địa chỉ',
       dataIndex: 'location',
       key: 'location'
     },
 
     {
-      title: 'Số lượng tình nguyện viên',
-      dataIndex: 'num_of_volunteers',
-      key: 'num_of_volunteers'
-    },
-    {
-      title: 'Hình ảnh',
-      key: 'status',
+      title: 'Người sáng lập',
+      dataIndex: 'creator',
       render: (_, record) => (
-        <>
-          <Image src={record.image} width={250} height={150} className='rounded-lg' />
-        </>
+        <div className='w-1/3 flex justify-between items-center'>
+          <img src={record.creator.avatar} width={30} height={30} className='rounded-full' />
+          <p>{record.creator.name}</p>
+        </div>
       )
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      render: (_, record) => <p>{record.status === 0 ? 'Đang mở' : 'Đã đóng'}</p>
+      render: (_, record) => <p>{record.status === 0 ? 'Hoạt động' : 'Không hoạt động'}</p>
     },
     {
       title: 'Hành động',
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
+          <div
+            className='cursor-pointer'
+            onClick={() => {
+              setOpen(true)
+              setRowId(record.id)
+            }}
+          >
+            <EditOutlined />
+          </div>
           <Popconfirm
             okButtonProps={{ loading: deleteMutation.isLoading }}
             onConfirm={() => {
@@ -90,11 +100,11 @@ const FeedbackManagement = ({}: Props) => {
 
   return (
     <>
-      {dataFeedback && dataFeedback.data.data && (
+      {dataOrganization && dataOrganization.data.data && (
         <React.Fragment>
           <Row justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
-              <h1 className='font-bold text-2xl'>Quản lý đánh giá</h1>
+              <h1 className='font-bold text-2xl'>Quản lý hoạt động</h1>
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-between items-center gap-3'>
@@ -102,11 +112,12 @@ const FeedbackManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataFeedback.data.data.activities} columns={columns} />
+          <Table dataSource={dataOrganization.data.data.organizations} columns={columns} />
+          <FormOrganization refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
         </React.Fragment>
       )}
     </>
   )
 }
-FeedbackManagement.getLayout = (children: React.ReactNode) => <DashboardLayout>{children}</DashboardLayout>
-export default FeedbackManagement
+OrganizationManagement.getLayout = (children: React.ReactNode) => <DashboardLayout>{children}</DashboardLayout>
+export default OrganizationManagement

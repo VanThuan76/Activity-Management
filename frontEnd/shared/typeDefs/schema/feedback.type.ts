@@ -10,4 +10,6 @@ export interface IFeedback {
   content: string;
   created_at?: any;
   updated_at?: any;
+  name?: string
+  avatar?: string
 }
