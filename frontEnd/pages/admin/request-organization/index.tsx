@@ -1,4 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import { Col, message, Popconfirm, Row, Space, Table } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
@@ -64,19 +64,38 @@ const RequestOrganizationManagement = ({}: Props) => {
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Popconfirm
-            okButtonProps={{ loading: updateMutation.isLoading }}
-            onConfirm={() => {
-              const body = {
-                organization_id: record.id,
-                status: record.status
-              }
-              updateMutation.mutate(body)
-            }}
-            title={'Phê duyệt'}
-          >
-            <CheckOutlined className='cursor-pointer'></CheckOutlined>
-          </Popconfirm>
+          {record.status === 1 ? (
+            <>
+              <Popconfirm
+                okButtonProps={{ loading: updateMutation.isLoading }}
+                onConfirm={() => {
+                  const body = {
+                    organization_id: record.id,
+                    status: record.status
+                  }
+                  updateMutation.mutate(body)
+                }}
+                title={'Phê duyệt'}
+              >
+                <CheckOutlined className='cursor-pointer'></CheckOutlined>
+              </Popconfirm>
+              <Popconfirm
+                okButtonProps={{ loading: updateMutation.isLoading }}
+                onConfirm={() => {
+                  const body = {
+                    organization_id: record.id,
+                    status: 2
+                  }
+                  updateMutation.mutate(body)
+                }}
+                title={'Từ chối'}
+              >
+                <CloseOutlined className='cursor-pointer'></CloseOutlined>
+              </Popconfirm>
+            </>
+          ) : (
+            <></>
+          )}
         </Space>
       )
     }

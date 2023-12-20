@@ -1,27 +1,30 @@
 import {
-  BellOutlined,
   ContactsOutlined,
   QuestionCircleOutlined,
   ExpandAltOutlined,
   UserOutlined
 } from '@ant-design/icons'
 import { Button, Layout, Menu, MenuProps } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Search from 'antd/lib/input/Search'
 import { useAppSelector } from '@/hooks/useRedux'
-import { deleteCookie } from 'cookies-next'
+import { deleteCookie, getCookie } from 'cookies-next'
 import { APP_SAVE_KEYS } from '@/constant/AppConstant'
+import { useDispatch } from 'react-redux'
+import { login } from '@/store/appSlice'
+import jwt_decode from 'jwt-decode'
 
 const { Header, Content, Footer } = Layout
 
 function BlankLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAppSelector(state => state.appSlice)
+  const dispatch = useDispatch()
   const [current, setCurrent] = useState('')
   const router = useRouter()
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key)
-    router.push(e.key)
+    window.location.href = `/${e.key}`
   }
   const handleLogout = () => {
     deleteCookie(APP_SAVE_KEYS.KEYS)
@@ -46,6 +49,15 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
       icon: <QuestionCircleOutlined />
     }
   ]
+  useEffect(() => {
+    const key = getCookie(APP_SAVE_KEYS.KEYS)
+    const role = getCookie(APP_SAVE_KEYS.ROLE)
+    if (typeof key === 'string' && role) {
+        const decodeData: any = jwt_decode(key)
+        dispatch(login({ userName: decodeData.username, role: decodeData.role_id, id: decodeData.id }))
+    }
+}, [])
+
   return (
     <React.Fragment>
       <Header className='flex justify-between items-center bg-[#fff]'>
@@ -90,3 +102,4 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
 }
 
 export default BlankLayout
+

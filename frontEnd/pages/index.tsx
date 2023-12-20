@@ -12,14 +12,17 @@ import Section_Home5 from '@/components/home/Section_Home5'
 import { useQuery } from 'react-query'
 import { activityService } from '@/services/activity.service'
 import { IActivity } from '@/typeDefs/schema/activity.type'
-import { faqService } from '@/services/faq.service'
-import { IFaq } from '@/typeDefs/schema/faq.type'
-
-type Props = {}
+import { feedbackService } from '@/services/feedback.service'
+import { IFeedback } from '@/typeDefs/schema/feedback.type'
 
 const Home: NextPageWithLayout = () => {
-  const { data: dataActivity } = useQuery(['listActivity'], () => activityService.getAllActivity())
-  const { data: dataFaqs } = useQuery(['listFaqs'], () => faqService.getAllFaq())
+  const { data: dataActivity } = useQuery(['listActivity'], () => activityService.getAllActivity(), {
+    select(data) {
+      const activityOpen = data.data.data.activities.filter(acitivty => acitivty.status === 0)
+      return activityOpen
+    }
+  })
+  const { data: dataFeedback } = useQuery(['listFeedback'], () => feedbackService.getAllFeedback())
   const { trans } = useTrans()
   return (
     <Fragment>
@@ -29,8 +32,8 @@ const Home: NextPageWithLayout = () => {
       <Section_Home1 />
       <Section_Home2 />
       <Section_Home3 />
-      <Section_Home4 activities={dataActivity?.data.data.activities as unknown as IActivity[]}/>
-      <Section_Home5 faqs={dataFaqs?.data.data.faqs as unknown as IFaq[]} />
+      <Section_Home4 activities={dataActivity as unknown as IActivity[]} />
+      <Section_Home5 faqs={dataFeedback?.data.data.feedbacks as unknown as IFeedback[]} />
     </Fragment>
   )
 }

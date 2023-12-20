@@ -9,6 +9,7 @@ import { userService } from '@/services/user.service'
 import { useAppSelector } from '@/hooks/useRedux'
 import { skillService } from '@/services/skill.service'
 import { IUser } from '@/typeDefs/schema/user.type'
+import { organizationService } from '@/services/organization.service'
 type Props = {
   next: any
 }
@@ -16,7 +17,6 @@ const Profile = ({ next }: Props) => {
   const [form] = useForm()
   const { user } = useAppSelector(state => state.appSlice)
   const dispatch = useDispatch()
-
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
       const result = data.data.data
@@ -28,6 +28,19 @@ const Profile = ({ next }: Props) => {
       return res
     }
   })
+
+  const { data: organizers } = useQuery(['organizers'], () => organizationService.getAllOrganization(), {
+    select(data) {
+      const result = data.data.data
+      if (!result) return
+      const res = result.organizations.map(organization => ({
+        label: organization.name,
+        value: organization.id
+      }))
+      return res
+    }
+  })
+
   const updateProfile = useMutation({
     mutationKey: 'updateProfile',
     mutationFn: (body: IUser) => userService.updateProfile(body),
@@ -46,11 +59,12 @@ const Profile = ({ next }: Props) => {
     updateProfile.mutate(value)
     next()
   }
-  const { data } = useQuery(['user'], () => userService.getUserById(user?.id as unknown as number))
+  const { data } = useQuery(['userDetail'], () => userService.getUserByAuth())
   useEffect(() => {
-    if (user?.id && data) {
+    if (user && data) {
       form.setFieldsValue({
-        ...data.data.data
+        // @ts-ignore
+        ...data.data.data.user
       })
     }
   }, [data])
@@ -111,12 +125,23 @@ const Profile = ({ next }: Props) => {
             <Select
               mode='multiple'
               placeholder='select one skills'
-              defaultValue={['']}
               optionLabelProp='label'
               options={skills}
             />
           </Form.Item>
-
+          {data?.data.data.belongsOrgainzer === null && (
+            <Form.Item
+              label='Thuộc tổ chức'
+              name='belongsOrgainzer'
+              rules={[{ required: true, message: 'Chưa điền tổ chức' }]}
+            >
+              <Select
+                placeholder='select one belongsOrgainzer'
+                optionLabelProp='label'
+                options={organizers}
+              />
+            </Form.Item>
+          )}
           <Form.Item style={{ textAlign: 'center' }}>
             <Button type='primary' htmlType='submit' loading={updateProfile.isLoading}>
               Cập nhật

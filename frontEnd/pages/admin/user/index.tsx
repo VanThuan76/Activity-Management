@@ -8,7 +8,7 @@ import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
 import { userService } from '@/services/user.service'
 import React from 'react'
-import { IUser, IUserList } from '@/typeDefs/schema/user.type'
+import { IUser } from '@/typeDefs/schema/user.type'
 
 type Props = {}
 

@@ -4,7 +4,6 @@ import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
-import { userService } from '@/services/user.service'
 import React from 'react'
 import { activityService } from '@/services/activity.service'
 import { IActivity } from '@/typeDefs/schema/activity.type'
@@ -15,7 +14,7 @@ const ActivityManagement = ({}: Props) => {
   const { data: dataActivity, refetch } = useQuery(['listActivty'], () => activityService.getAllActivity())
   const deleteMutation = useMutation({
     mutationKey: ['deleteMutation'],
-    mutationFn: (userId: number) => userService.deleteUser(userId),
+    mutationFn: (activityId: number) => activityService.deleteActivity(activityId),
     onSuccess: () => {
       message.success('Xoá thành công')
       refetch()

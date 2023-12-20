@@ -1,3 +1,5 @@
+import { IActivity } from "./activity.type";
+
 export interface IFeedBacks {
   feedbacks: IFeedback[];
 }
@@ -12,4 +14,5 @@ export interface IFeedback {
   updated_at?: any;
   name?: string
   avatar?: string
+  activity?: IActivity | null | undefined
 }

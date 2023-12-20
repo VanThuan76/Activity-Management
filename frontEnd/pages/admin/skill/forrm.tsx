@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from 'react-query'
-import { Button, Form, Input, message, Modal, Row, Col, DatePicker, Select, SelectProps } from 'antd'
+import { Button, Form, Input, message, Modal, Row, Col, Select, SelectProps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useEffect } from 'react'
-import { userService } from '@/services/user.service'
 import dayjs from 'dayjs'
+import { skillService } from '@/services/skill.service'
 
 interface Props {
   editId?: number
@@ -16,7 +16,7 @@ const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
   const isEditIdValidNumber = typeof editId === 'number'
   const registerMutation = useMutation({
     mutationKey: 'register',
-    mutationFn: (body: { username: string; password: string }) => userService.newUser(body),
+    mutationFn: (body: { name: string; description: string }) => skillService.newSkill(body),
     onSuccess(data, _variables, _context) {
       const res = data.data
       if (!res) return
@@ -30,7 +30,7 @@ const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
   })
   const updateMutation = useMutation({
     mutationKey: 'update',
-    mutationFn: (body: { username: string; password: string }) => userService.updateUser(editId as number, body),
+    mutationFn: (body: { name: string; description: string }) => skillService.updateSkill(editId as number, body),
     onSuccess(data, _variables, _context) {
       const res = data.data
       if (!res) return
@@ -49,37 +49,19 @@ const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
       registerMutation.mutate(value)
     }
   }
-  const { data } = useQuery(['user'], () => userService.getUserById(editId as number), {
+  const { data } = useQuery(['skill'], () => skillService.getSkillById(editId as number), {
     enabled: isEditIdValidNumber
   })
   useEffect(() => {
     if (editId && data) {
-      const formattedBirthday = dayjs(data.data.data.birthday).format('YYYY-MM-DD')
-
       form.setFieldsValue({
-        ...data.data.data,
-        birthday: formattedBirthday
+        ...data.data.data
       })
     }
   }, [data])
-  const options: SelectProps['options'] = [
-    {
-      label: 'Nam',
-      value: 0
-    },
-    {
-      label: 'Nữ',
-      value: 1
-    }
-  ]
+
   return (
-    <Modal
-      title={editId ? `Chỉnh sửa tài khoản` : 'Tạo tài khoản mới'}
-      centered
-      open={open}
-      width={1000}
-      footer={false}
-    >
+    <Modal title={editId ? `Chỉnh sửa kỹ năng` : 'Tạo kỹ năng mới'} centered open={open} width={1000} footer={false}>
       <Form
         form={form}
         name='basic'
@@ -88,40 +70,12 @@ const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
         autoComplete='off'
         layout='vertical'
       >
-        <Form.Item
-          label='Tên tài khoản'
-          name='username'
-          rules={[{ required: true, message: 'Chưa điền tên tài khoản' }]}
-        >
+        <Form.Item label='Tên kỹ năng' name='name' rules={[{ required: true, message: 'Chưa điền tên kỹ năng' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Chưa điền email' }]}>
+        <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Chưa điền mô tả' }]}>
           <Input />
-        </Form.Item>
-
-        <Form.Item label='Tên' name='name' rules={[{ required: true, message: 'Chưa điền tên' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label='Số điện thoại' name='phone' rules={[{ required: true, message: 'Chưa điền số điện thoại' }]}>
-          <Input type='number' />
-        </Form.Item>
-
-        <Form.Item label='Giới tính' name='gender' rules={[{ required: true, message: 'Chưa điền giới tính' }]}>
-          <Select placeholder='select one country' defaultValue={['']} optionLabelProp='label' options={options} />
-        </Form.Item>
-
-        {/* <Form.Item label='Ngày sinh' name='birthday' rules={[{ required: true, message: 'Chưa điền ngày sinh' }]}>
-          <DatePicker />
-        </Form.Item> */}
-
-        <Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: 'Chưa điền địa chỉ' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label='Mật khẩu' name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
-          <Input.Password />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

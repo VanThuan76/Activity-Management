@@ -6,13 +6,13 @@ import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
 import { userService } from '@/services/user.service'
 import React from 'react'
-import { activityService } from '@/services/activity.service'
-import { IActivity } from '@/typeDefs/schema/activity.type'
+import { feedbackService } from '@/services/feedback.service'
+import { IFeedback } from '@/typeDefs/schema/feedback.type'
 
 type Props = {}
 
 const FeedbackManagement = ({}: Props) => {
-  const { data: dataFeedback, refetch } = useQuery(['listFeedback'], () => activityService.getAllActivity())
+  const { data: dataFeedback, refetch } = useQuery(['listFeedback'], () => feedbackService.getAllFeedback())
   const deleteMutation = useMutation({
     mutationKey: ['deleteMutation'],
     mutationFn: (userId: number) => userService.deleteUser(userId),
@@ -24,7 +24,7 @@ const FeedbackManagement = ({}: Props) => {
       message.error('Xoá không thành công')
     }
   })
-  const columns: ColumnType<IActivity>[] = [
+  const columns: ColumnType<IFeedback>[] = [
     {
       title: '#',
       key: 'id',
@@ -35,39 +35,29 @@ const FeedbackManagement = ({}: Props) => {
       )
     },
     {
-      title: 'Tên',
+      title: 'Tên hoạt động',
       dataIndex: 'name',
-      key: 'name'
+      render: (_, record) => <p>{record.activity?.name}</p>
     },
     {
-      title: 'Mô tả',
-      dataIndex: 'description',
-      key: 'description'
-    },
-    {
-      title: 'Địa điểm',
-      dataIndex: 'location',
-      key: 'location'
-    },
-
-    {
-      title: 'Số lượng tình nguyện viên',
-      dataIndex: 'num_of_volunteers',
-      key: 'num_of_volunteers'
-    },
-    {
-      title: 'Hình ảnh',
-      key: 'status',
+      title: 'Người feedback',
+      key: 'user',
       render: (_, record) => (
-        <>
-          <Image src={record.image} width={250} height={150} className='rounded-lg' />
-        </>
+        <div className='w-1/3 flex justify-between items-center'>
+          <Image preview={false} src={record.avatar} width={50} height={50} className='rounded-lg' />
+          <p>{record.name}</p>
+        </div>
       )
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      render: (_, record) => <p>{record.status === 0 ? 'Đang mở' : 'Đã đóng'}</p>
+      title: 'Tiêu đề',
+      dataIndex: 'title',
+      key: 'title'
+    },
+    {
+      title: 'Nội dung',
+      dataIndex: 'content',
+      key: 'content'
     },
     {
       title: 'Hành động',
@@ -102,7 +92,7 @@ const FeedbackManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataFeedback.data.data.activities} columns={columns} />
+          <Table dataSource={dataFeedback.data.data.feedbacks} columns={columns} />
         </React.Fragment>
       )}
     </>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Collapse } from 'antd'
-import { IFaq } from '@/typeDefs/schema/faq.type'
 import dayjs from 'dayjs'
+import { IFeedback } from '@/typeDefs/schema/feedback.type'
 const { Panel } = Collapse
 
 type Props = {
-  faqs: IFaq[] | undefined
+  faqs: IFeedback[] | undefined
 }
 
 const Section_Home5 = ({faqs}: Props) => {
@@ -17,8 +17,8 @@ const Section_Home5 = ({faqs}: Props) => {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
         {faqs && faqs.map((faq) => (
           <Collapse key={faq.id} collapsible='icon' defaultActiveKey={['1']}>
-            <Panel header={faq.question} key='1'>
-              <p>{faq.answer}</p>
+            <Panel header={faq.title} key='1'>
+              <p>{faq.content}</p>
               <p>Cập nhật lúc: {dayjs(faq.updated_at).format("DD/MM/YYYY")}</p>
             </Panel>
           </Collapse>

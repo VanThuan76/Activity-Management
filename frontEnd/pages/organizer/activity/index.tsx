@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { Col, message, Popconfirm, Row, Space, Table } from 'antd'
+import { Button, Col, message, Popconfirm, Row, Space, Table } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
 import DashboardLayout from '@/layouts/DashboardLayout'
@@ -13,6 +13,7 @@ import FormOrganization from './form'
 type Props = {}
 
 const OrganizationManagement = ({}: Props) => {
+  const [action, setAtion] = useState<string>('')
   const [open, setOpen] = useState(false)
   const [rowId, setRowId] = useState<number>()
   const { data: dataOrganization, refetch } = useQuery(['listOrganization'], () =>
@@ -109,11 +110,24 @@ const OrganizationManagement = ({}: Props) => {
             <Col span={12}>
               <div className='flex py-2 justify-between items-center gap-3'>
                 <Search className='bg-blue-300 rounded-lg' placeholder='Tìm kiếm' onSearch={() => {}} enterButton />
+                <Button
+                  onClick={() => {
+                    setAtion('create')
+                    setRowId(NaN)
+                    setOpen(true)
+                  }}
+                >
+                  Tạo mới
+                </Button>
               </div>
             </Col>
           </Row>
           <Table dataSource={dataOrganization.data.data.organizations} columns={columns} />
-          <FormOrganization refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
+          {action === 'create' && !rowId ? (
+            <FormOrganization refetch={refetch} open={open} setOpen={setOpen} />
+          ) : (
+            <FormOrganization refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
+          )}
         </React.Fragment>
       )}
     </>

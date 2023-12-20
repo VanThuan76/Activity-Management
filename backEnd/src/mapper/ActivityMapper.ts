@@ -32,6 +32,7 @@ export const mappedActivities = (activities: ActivityAttributes[]) => {
         status,
         created_at,
         updated_at,
+        creator_id: creatorId,
         creator: creatorName,
         feedback: mappedFeedbacks,
       };

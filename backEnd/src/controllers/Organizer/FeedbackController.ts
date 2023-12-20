@@ -8,6 +8,7 @@ import {
 import { Feedback, FeedbackAttributes } from "../../models/feedback";
 import { Users } from "../../models/users";
 import { Activities } from "../../models/activities";
+import { feedbackMapper } from "../../mapper/FeedbackMapper";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -32,13 +33,12 @@ export const listFeedBackByOrganizer = async (
         where: { creator: organizerId },
       });
       const activityIds = activities.map((activity) => activity.id);
-      const feedbacks = await Feedback.findAll({
+      const feedbacksCurrent = await Feedback.findAll({
         where: { activity_id: activityIds },
       });
+      const feedbacks = await feedbackMapper(feedbacksCurrent); // Sử dụng hàm mapper
       if (feedbacks.length > 0) {
-        const response: GeneralResponse<{
-          feedbacks: FeedbackAttributes[];
-        }> = {
+        const response: GeneralResponse<any> = {
           status: 200,
           data: { feedbacks },
           message: "Get list feedback successfully",

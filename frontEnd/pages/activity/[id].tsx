@@ -4,18 +4,34 @@ import { GetStaticPaths, GetStaticProps } from 'next/types'
 import { IBaseResponse } from '@/typeDefs/baseReponse.type'
 import { IActivity } from '@/typeDefs/schema/activity.type'
 import BlankLayout from '@/layouts/BlankLayout'
-import { Button, Avatar, List, Badge, message } from 'antd'
+import { Button, Avatar, List, Badge, message, Form, Input, Card } from 'antd'
 import { useMutation } from 'react-query'
 import { activityService } from '@/services/activity.service'
 import { useAppSelector } from '@/hooks/useRedux'
 import { useRouter } from 'next/router'
+import { feedbackService } from '@/services/feedback.service'
 
 type Props = {
   activity: IBaseResponse<IActivity>
 }
 const DetailActivity = ({ activity }: Props) => {
-  const router = useRouter();
+  const router = useRouter()
   const { user } = useAppSelector(state => state.appSlice)
+
+  const newFeedbackMutation = useMutation({
+    mutationKey: 'newFeedback',
+    mutationFn: (body: { activity_id: number; title: string; content: string }) => feedbackService.newActivity(body),
+    onSuccess(data, _variables, _context) {
+      const res = data.data
+      if (!res) return
+      message.success('Tạo thành công')
+      window.location.reload()
+    },
+    onError(error, variables, context) {
+      message.error('Tạo không thành công')
+    }
+  })
+
   const applyActivityMutation = useMutation({
     mutationKey: 'applyActivity',
     mutationFn: (body: { activity_id: number }) => activityService.applyActivity(body),
@@ -28,6 +44,14 @@ const DetailActivity = ({ activity }: Props) => {
       message.error('Đăng ký không thành công')
     }
   })
+  function handleNewFeedback(value: any) {
+    const body = {
+      activity_id: activity.data.id,
+      title: value.title,
+      content: value.content
+    }
+    newFeedbackMutation.mutate(body)
+  }
   if (!activity) return <React.Fragment></React.Fragment>
   return (
     <React.Fragment>
@@ -56,7 +80,9 @@ const DetailActivity = ({ activity }: Props) => {
             {activity.data.status === 0 && user ? (
               <Button onClick={() => applyActivityMutation.mutate({ activity_id: activity.data.id })}>Đăng ký</Button>
             ) : (
-              <Button onClick={() => !user ? router.push("/login") : router.push("/activity")}>Vui lòng đăng ký tài khoản hoặc chờ hoạt động khác</Button>
+              <Button onClick={() => (!user ? router.push('/login') : router.push('/activity'))}>
+                Vui lòng đăng ký tài khoản hoặc chờ hoạt động khác
+              </Button>
             )}
           </div>
         </div>
@@ -77,7 +103,30 @@ const DetailActivity = ({ activity }: Props) => {
               />
             </List.Item>
           )}
-        />{' '}
+        />
+        {user && (
+          <Card title='Feedback'>
+            <Form
+              name='newFeedback'
+              initialValues={{ remember: true }}
+              onFinish={handleNewFeedback}
+              autoComplete='off'
+              layout='vertical'
+            >
+              <Form.Item label='Tiêu đề' name='title' rules={[{ required: true, message: 'Chưa điền tiêu đề' }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item label='Nội dung' name='content' rules={[{ required: true, message: 'Chưa điền nội dung' }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item style={{ textAlign: 'center' }}>
+                <Button htmlType='submit'>Bình luận</Button>
+              </Form.Item>
+            </Form>
+          </Card>
+        )}
       </section>
     </React.Fragment>
   )

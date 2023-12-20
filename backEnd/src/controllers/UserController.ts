@@ -4,6 +4,10 @@ import * as dotenv from "dotenv";
 import { GeneralResponse, commonResponse } from "../utilities/CommonResponse";
 import { UserAttributes, Users } from "../models/users";
 import { SkillUsers } from "../models/skill_users";
+import {
+  VolunteerRequest,
+  VolunteerRequestAttributes,
+} from "../models/volunteer_request";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -62,7 +66,10 @@ export const updateProfile = async (
     commonResponse(req, res, response);
   }
 };
-export const detailUser = async (req: Request, res: Response): Promise<void> => {
+export const detailUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -87,12 +94,20 @@ export const detailUser = async (req: Request, res: Response): Promise<void> => 
       where: { user_id: userId },
     });
 
+    const userOrgainzer = await VolunteerRequest.findOne({
+      where: { user_id: userId },
+    });
     const response: GeneralResponse<{
       user: UserAttributes;
       skills: SkillUsers[];
+      belongsOrgainzer: VolunteerRequestAttributes | null;
     }> = {
       status: 200,
-      data: { user: user.toJSON() as UserAttributes, skills: userSkills },
+      data: {
+        user: user.toJSON() as UserAttributes,
+        skills: userSkills,
+        belongsOrgainzer: userOrgainzer,
+      },
       message: "User details retrieved successfully",
     };
     commonResponse(req, res, response);

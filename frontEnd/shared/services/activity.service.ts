@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { https, httpsNoToken } from '../config/https.config'
 import { IBaseResponse } from '@/typeDefs/baseReponse.type'
-import { IActivity, IActivityList } from '@/typeDefs/schema/activity.type'
+import { IActivity, IActivityList, IAppliedVolunteers } from '@/typeDefs/schema/activity.type'
 
 class ActivityService {
   getAllActivity(): Promise<AxiosResponse<IBaseResponse<IActivityList>>> {
@@ -21,6 +21,12 @@ class ActivityService {
   }
   deleteActivity(id: number) {
     return https.delete(`/admin/activity/${id}`)
+  }
+  getAllApplyActivity(): Promise<AxiosResponse<IBaseResponse<IAppliedVolunteers>>> {
+    return https.get('/organizer/applied_volunteer')
+  }
+  updateApplyActivity(body: { user_id: number; status: number }) {
+    return https.put(`/organizer/update_applied_volunteer`, body)
   }
 }
 

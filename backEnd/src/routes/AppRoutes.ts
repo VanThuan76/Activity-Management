@@ -15,10 +15,10 @@ import { createActivity, deleteActivity, updateActivity } from "../controllers/O
 import { applyVolunteer } from "../controllers/ActivityApplyController";
 import { listApplyVolunteers, updateApplyVolunteer } from "../controllers/Organizer/ActivityApplyController";
 import { createSkill, deleteSkill, updateSkill } from "../controllers/Admin/SkillController";
-import { listSkills } from "../controllers/SkillController";
+import { getSkillById, listSkills } from "../controllers/SkillController";
 import { newFeedBack } from "../controllers/FeedbackController";
 import { createFaq, deleteFaq, updateFaq } from "../controllers/Admin/FaqController";
-import { listFaq } from "../controllers/FaqController";
+import { getFaqById, listFaq } from "../controllers/FaqController";
 import { listActivitesBySkills } from "../controllers/SkillActivitesController";
 import { listFeedBack } from "../controllers/Admin/FeedbackController";
 import { listFeedBackByOrganizer } from "../controllers/Organizer/FeedbackController";
@@ -50,7 +50,7 @@ router.post("/api/v1/reset_password", resetPassword);
         router.put("/api/v1/admin/faq/:id", authenticateToken, checkRoleAdmin, updateFaq);
         router.delete("/api/v1/admin/faq/:id", authenticateToken, checkRoleAdmin, deleteFaq);
     //FeedBack
-        router.get("/api/v1/admin/feedback", authenticateToken, checkRoleAdmin, listFeedBack);
+        router.get("/api/v1/admin/feedback", listFeedBack); //Speacial
     //Activity
         router.delete("/api/v1/admin/activity/:id", authenticateToken, checkRoleAdmin, deleteActivityByAdmin);
 //Organizer
@@ -82,6 +82,7 @@ router.get("/api/v1/activities/:id", detailActivity);
 router.post("/api/v1/activities_by_skill", listActivitesBySkills);
 //Skill
 router.get("/api/v1/skills", listSkills);
+router.get("/api/v1/skills/:id", getSkillById);
 //Feedback
 router.post("/api/v1/feedback", newFeedBack);
 //Request Join in Activity By Volunteer
@@ -90,4 +91,5 @@ router.post("/api/v1/apply_volunteer", authenticateToken, applyVolunteer);
 router.post("/api/v1/request_volunteer", authenticateToken, requestVolunteer);
 //Faq
 router.get("/api/v1/faq", listFaq);
+router.get("/api/v1/faq/:id", getFaqById);
 export default router;

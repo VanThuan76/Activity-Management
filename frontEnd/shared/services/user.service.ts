@@ -11,6 +11,9 @@ class UserService {
     getUserById(id: number): Promise<AxiosResponse<IBaseResponse<IUser>>> {
         return https.get(`/admin/users/${id}`)
     }
+    getUserByAuth(): Promise<AxiosResponse<IBaseResponse<IUser>>> {
+        return https.get(`/user`)
+    }
     newUser(body: { username: string, password: string }) {
         return https.post("/register", body)
     }

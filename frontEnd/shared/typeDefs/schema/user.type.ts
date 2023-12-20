@@ -1,3 +1,5 @@
+import { ISkill } from "./skill.type";
+
 export interface IUserList {
     users: IUser[]
 }
@@ -17,4 +19,6 @@ export interface IUser {
   status: number;
   created_at: string;
   updated_at: string;
+  skills?: ISkill[],
+  belongsOrgainzer?: any
 }
