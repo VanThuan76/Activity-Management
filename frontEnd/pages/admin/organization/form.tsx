@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from 'react-query'
-import { Button, Form, Input, message, Modal, Row, Col } from 'antd'
+import { Button, Form, Input, message, Modal, Row, Col, Select, SelectProps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useEffect } from 'react'
 import { organizationService } from '@/services/organization.service'
@@ -36,6 +36,16 @@ const FormOrganization = ({ editId, open, setOpen, refetch }: Props) => {
   const { data } = useQuery(['user'], () => organizationService.getOrganizationById(editId as number), {
     enabled: isEditIdValidNumber
   })
+  const options: SelectProps['options'] = [
+    {
+      label: 'Hoạt động',
+      value: 0
+    },
+    {
+      label: 'Không hoạt động',
+      value: 1
+    }
+  ]
   useEffect(() => {
     if (editId && data) {
       form.setFieldsValue({
@@ -70,6 +80,10 @@ const FormOrganization = ({ editId, open, setOpen, refetch }: Props) => {
 
         <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Chưa điền mô tả' }]}>
           <Input />
+        </Form.Item>
+
+        <Form.Item label='Trạng thái' name='status' rules={[{ required: true, message: 'Chưa điền trạng thái' }]}>
+          <Select placeholder='select one status' defaultValue={['']} optionLabelProp='label' options={options} />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

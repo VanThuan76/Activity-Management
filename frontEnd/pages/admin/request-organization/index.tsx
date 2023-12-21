@@ -70,7 +70,7 @@ const RequestOrganizationManagement = ({}: Props) => {
                 okButtonProps={{ loading: updateMutation.isLoading }}
                 onConfirm={() => {
                   const body = {
-                    organization_id: record.id,
+                    organization_id: record.organizer.id,
                     status: record.status
                   }
                   updateMutation.mutate(body)
@@ -83,7 +83,7 @@ const RequestOrganizationManagement = ({}: Props) => {
                 okButtonProps={{ loading: updateMutation.isLoading }}
                 onConfirm={() => {
                   const body = {
-                    organization_id: record.id,
+                    organization_id: record.organizer.id,
                     status: 2
                   }
                   updateMutation.mutate(body)

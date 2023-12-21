@@ -64,6 +64,7 @@ export const updateRequestOrganization = async (
       const organizationRequestRecord = await OrganizationRequest.findOne({
         where: { organization_id: organizationId },
       });
+      console.log(organizationRequestRecord)
       if (organizationRequestRecord) {
         const result = await organizationRequestRecord.update(body);
         const accountUser = await Users.findByPk(

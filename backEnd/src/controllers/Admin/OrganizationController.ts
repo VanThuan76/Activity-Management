@@ -62,6 +62,7 @@ export const updateOrganization = async (
       name: req.body.name as string,
       description: req.body.description as string,
       location: req.body.location as string,
+      status: req.body.status as number,
       updated_at: new Date(),
     };
 

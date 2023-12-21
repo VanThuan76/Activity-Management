@@ -1,27 +1,24 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { Button, Col, message, Popconfirm, Row, Space, Table } from 'antd'
+import { Button, Col, Image, message, Popconfirm, Row, Space, Table } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import { useMutation, useQuery } from 'react-query'
-import { userService } from '@/services/user.service'
 import React, { useState } from 'react'
-import { organizationService } from '@/services/organization.service'
-import { IOrganization } from '@/typeDefs/schema/organization.type'
-import FormOrganization from './form'
+import { activityService } from '@/services/activity.service'
+import { IActivity } from '@/typeDefs/schema/activity.type'
+import FormActivity from './form'
 
 type Props = {}
 
-const OrganizationManagement = ({}: Props) => {
-  const [action, setAtion] = useState<string>('')
+const ActivityManagement = ({}: Props) => {
   const [open, setOpen] = useState(false)
+  const [action, setAtion] = useState<string>('')
   const [rowId, setRowId] = useState<number>()
-  const { data: dataOrganization, refetch } = useQuery(['listOrganization'], () =>
-    organizationService.getAllOrganization()
-  )
+  const { data: dataActivity, refetch } = useQuery(['listActivty'], () => activityService.getAllActivity())
   const deleteMutation = useMutation({
     mutationKey: ['deleteMutation'],
-    mutationFn: (userId: number) => userService.deleteUser(userId),
+    mutationFn: (activityId: number) => activityService.deleteActivity(activityId),
     onSuccess: () => {
       message.success('Xoá thành công')
       refetch()
@@ -30,7 +27,7 @@ const OrganizationManagement = ({}: Props) => {
       message.error('Xoá không thành công')
     }
   })
-  const columns: ColumnType<IOrganization>[] = [
+  const columns: ColumnType<IActivity>[] = [
     {
       title: '#',
       key: 'id',
@@ -51,25 +48,46 @@ const OrganizationManagement = ({}: Props) => {
       key: 'description'
     },
     {
-      title: 'Địa chỉ',
+      title: 'Địa điểm',
       dataIndex: 'location',
       key: 'location'
     },
-
     {
-      title: 'Người sáng lập',
-      dataIndex: 'creator',
+      title: 'Số lượng tình nguyện viên',
+      dataIndex: 'num_of_volunteers',
+      key: 'num_of_volunteers'
+    },
+    {
+      title: 'Feedbacks',
+      key: 'feedback',
       render: (_, record) => (
-        <div className='w-1/3 flex justify-between items-center'>
-          <img src={record.creator.avatar} width={30} height={30} className='rounded-full' />
-          <p>{record.creator.name}</p>
+        <div className='w-full flex flex-col justify-start items-start gap-3'>
+          {record.feedback &&
+            record.feedback.map(feedback => (
+              <>
+                <div className='w-full flex justify-between items-center'>
+                  <Image src={feedback.avatar} width={50} height={50} className='rounded-lg' />
+                  <p>{feedback.name}</p>
+                </div>
+                <p>Nội dung: {feedback.content}</p>
+              </>
+            ))}
         </div>
+      )
+    },
+    {
+      title: 'Hình ảnh',
+      key: 'status',
+      render: (_, record) => (
+        <>
+          <Image src={record.image} width={250} height={150} className='rounded-lg' />
+        </>
       )
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      render: (_, record) => <p>{record.status === 0 ? 'Hoạt động' : 'Không hoạt động'}</p>
+      render: (_, record) => <p>{record.status === 0 ? 'Đang mở' : 'Đã đóng'}</p>
     },
     {
       title: 'Hành động',
@@ -79,21 +97,13 @@ const OrganizationManagement = ({}: Props) => {
           <div
             className='cursor-pointer'
             onClick={() => {
+              setAtion('edit')
               setOpen(true)
               setRowId(record.id)
             }}
           >
             <EditOutlined />
           </div>
-          <Popconfirm
-            okButtonProps={{ loading: deleteMutation.isLoading }}
-            onConfirm={() => {
-              deleteMutation.mutate(record.id)
-            }}
-            title={'Xoá'}
-          >
-            <DeleteOutlined className='cursor-pointer'></DeleteOutlined>
-          </Popconfirm>
         </Space>
       )
     }
@@ -101,7 +111,7 @@ const OrganizationManagement = ({}: Props) => {
 
   return (
     <>
-      {dataOrganization && dataOrganization.data.data && (
+      {dataActivity && dataActivity.data.data && (
         <React.Fragment>
           <Row justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
@@ -122,16 +132,16 @@ const OrganizationManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataOrganization.data.data.organizations} columns={columns} />
+          <Table dataSource={dataActivity.data.data.activities} columns={columns} />
           {action === 'create' && !rowId ? (
-            <FormOrganization refetch={refetch} open={open} setOpen={setOpen} />
+            <FormActivity refetch={refetch} open={open} setOpen={setOpen} />
           ) : (
-            <FormOrganization refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
+            <FormActivity refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
           )}
         </React.Fragment>
       )}
     </>
   )
 }
-OrganizationManagement.getLayout = (children: React.ReactNode) => <DashboardLayout>{children}</DashboardLayout>
-export default OrganizationManagement
+ActivityManagement.getLayout = (children: React.ReactNode) => <DashboardLayout>{children}</DashboardLayout>
+export default ActivityManagement
