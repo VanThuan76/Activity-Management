@@ -5,19 +5,24 @@ import { IBaseResponse } from '@/typeDefs/baseReponse.type'
 import { IActivity } from '@/typeDefs/schema/activity.type'
 import BlankLayout from '@/layouts/BlankLayout'
 import { Button, Avatar, List, Badge, message, Form, Input, Card } from 'antd'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { activityService } from '@/services/activity.service'
 import { useAppSelector } from '@/hooks/useRedux'
 import { useRouter } from 'next/router'
 import { feedbackService } from '@/services/feedback.service'
+import { userService } from '@/services/user.service'
 
 type Props = {
   activity: IBaseResponse<IActivity>
 }
 const DetailActivity = ({ activity }: Props) => {
+  const { data: userDetail } = useQuery(['userDetail'], () => userService.getUserByAuth(), {
+    select(data) {
+      return data.data.data.activityApplied
+    }
+  })
   const router = useRouter()
   const { user } = useAppSelector(state => state.appSlice)
-
   const newFeedbackMutation = useMutation({
     mutationKey: 'newFeedback',
     mutationFn: (body: { activity_id: number; title: string; content: string }) => feedbackService.newActivity(body),
@@ -78,7 +83,15 @@ const DetailActivity = ({ activity }: Props) => {
             <h3>Nội dung: {activity.data.description}</h3>
             <p>Số lượng TN đã tham dự: {activity.data.num_of_volunteers}</p>
             {activity.data.status === 0 && user ? (
-              <Button onClick={() => applyActivityMutation.mutate({ activity_id: activity.data.id })}>Đăng ký</Button>
+              <>
+                {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
+                  <p>Bạn đã đăng ký</p>
+                ) : (
+                  <Button onClick={() => applyActivityMutation.mutate({ activity_id: activity.data.id })}>
+                    Đăng ký
+                  </Button>
+                )}
+              </>
             ) : (
               <Button onClick={() => (!user ? router.push('/login') : router.push('/activity'))}>
                 Vui lòng đăng ký tài khoản hoặc chờ hoạt động khác

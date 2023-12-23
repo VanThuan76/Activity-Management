@@ -8,6 +8,10 @@ import {
   VolunteerRequest,
   VolunteerRequestAttributes,
 } from "../models/volunteer_request";
+import {
+  ActivityApply,
+  ActivityApplyAttributes,
+} from "../models/activity_apply";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -97,15 +101,21 @@ export const detailUser = async (
     const userOrgainzer = await VolunteerRequest.findOne({
       where: { user_id: userId },
     });
+
+    const userActivity = await ActivityApply.findAll({
+      where: { user_id: userId },
+    });
     const response: GeneralResponse<{
       user: UserAttributes;
       skills: SkillUsers[];
+      activityApplied: ActivityApplyAttributes[];
       belongsOrgainzer: VolunteerRequestAttributes | null;
     }> = {
       status: 200,
       data: {
         user: user.toJSON() as UserAttributes,
         skills: userSkills,
+        activityApplied: userActivity,
         belongsOrgainzer: userOrgainzer,
       },
       message: "User details retrieved successfully",

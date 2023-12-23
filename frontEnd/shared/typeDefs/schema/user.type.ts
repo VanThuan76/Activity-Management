@@ -21,4 +21,5 @@ export interface IUser {
   updated_at: string;
   skills?: ISkill[],
   belongsOrgainzer?: any
+  activityApplied?: any
 }

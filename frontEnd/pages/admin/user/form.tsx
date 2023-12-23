@@ -112,9 +112,15 @@ const FormUser = ({ editId, open, setOpen, refetch }: Props) => {
           <Select placeholder='select one country' defaultValue={['']} optionLabelProp='label' options={options} />
         </Form.Item>
 
-        {/* <Form.Item label='Ngày sinh' name='birthday' rules={[{ required: true, message: 'Chưa điền ngày sinh' }]}>
+        <Form.Item
+          label='Ngày sinh'
+          name='birthday'
+          rules={[{ required: true, message: 'Chưa điền ngày sinh' }]}
+          getValueFromEvent={onChange => dayjs(onChange).format('YYYY-MM-DD')}
+          getValueProps={i => ({ value: dayjs(i) })}
+        >
           <DatePicker />
-        </Form.Item> */}
+        </Form.Item>
 
         <Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: 'Chưa điền địa chỉ' }]}>
           <Input />

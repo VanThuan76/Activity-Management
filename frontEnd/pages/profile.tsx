@@ -1,5 +1,5 @@
-import { Button, Card, Form, Input, Select, SelectProps, message } from 'antd'
-import React, { useEffect } from 'react'
+import { Button, Card, DatePicker, Form, Input, Select, SelectProps, message } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import BlankLayout from '@/layouts/BlankLayout'
 import { useForm } from 'antd/lib/form/Form'
@@ -10,12 +10,15 @@ import { useAppSelector } from '@/hooks/useRedux'
 import { skillService } from '@/services/skill.service'
 import { IUser } from '@/typeDefs/schema/user.type'
 import { organizationService } from '@/services/organization.service'
+import dayjs from 'dayjs'
+import InputUpload from '@/components/common/UploadInput'
 type Props = {
   next: any
 }
 const Profile = ({ next }: Props) => {
   const [form] = useForm()
   const { user } = useAppSelector(state => state.appSlice)
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(user?.avatar)
   const dispatch = useDispatch()
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
@@ -78,6 +81,19 @@ const Profile = ({ next }: Props) => {
       value: 1
     }
   ]
+  const handleAvatarChange = (newAvatarUrl: string) => {
+    const updatedAvatarUrl = newAvatarUrl || ''
+    setAvatarUrl(updatedAvatarUrl)
+    // Kiểm tra nếu formData tồn tại, thì cập nhật avatar trong formData
+    if (user && data) {
+      form.setFieldsValue({
+        // @ts-ignore
+        ...data.data.data.user,
+        avatar: updatedAvatarUrl
+      })
+    }
+  }
+
   return (
     <React.Fragment>
       <Card
@@ -93,6 +109,9 @@ const Profile = ({ next }: Props) => {
           autoComplete='off'
           layout='vertical'
         >
+          <Form.Item label='Avatar' name='avatar'>
+            <InputUpload initSrc={avatarUrl} onChange={handleAvatarChange} />
+          </Form.Item>
           <Form.Item label='Tên' name='name' rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
             <Input />
           </Form.Item>
@@ -113,6 +132,16 @@ const Profile = ({ next }: Props) => {
             <Select placeholder='select one gender' defaultValue={['']} optionLabelProp='label' options={options} />
           </Form.Item>
 
+          <Form.Item
+            label='Ngày sinh'
+            name='birthday'
+            rules={[{ required: true, message: 'Chưa điền ngày sinh' }]}
+            getValueFromEvent={onChange => dayjs(onChange).format('YYYY-MM-DD')}
+            getValueProps={i => ({ value: dayjs(i) })}
+          >
+            <DatePicker />
+          </Form.Item>
+
           <Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: 'Chưa điền địa chỉ' }]}>
             <Input />
           </Form.Item>
@@ -122,12 +151,7 @@ const Profile = ({ next }: Props) => {
           </Form.Item>
 
           <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
-            <Select
-              mode='multiple'
-              placeholder='select one skills'
-              optionLabelProp='label'
-              options={skills}
-            />
+            <Select mode='multiple' placeholder='select one skills' optionLabelProp='label' options={skills} />
           </Form.Item>
           {data?.data.data.belongsOrgainzer === null && (
             <Form.Item
@@ -135,11 +159,7 @@ const Profile = ({ next }: Props) => {
               name='belongsOrgainzer'
               rules={[{ required: true, message: 'Chưa điền tổ chức' }]}
             >
-              <Select
-                placeholder='select one belongsOrgainzer'
-                optionLabelProp='label'
-                options={organizers}
-              />
+              <Select placeholder='select one belongsOrgainzer' optionLabelProp='label' options={organizers} />
             </Form.Item>
           )}
           <Form.Item style={{ textAlign: 'center' }}>

@@ -7,7 +7,8 @@ import {
   MonitorOutlined,
   PullRequestOutlined,
   StarOutlined,
-  UserAddOutlined
+  UserAddOutlined,
+  UsergroupAddOutlined
 } from '@ant-design/icons'
 import { Layout, Menu, MenuProps, Typography, theme } from 'antd'
 import { useRouter } from 'next/router'
@@ -99,6 +100,11 @@ const SiderMenu = () => {
           key: '/organizer/request-volunteer',
           icon: <PullRequestOutlined />,
           label: 'Quản lý yêu cầu/tình nguyện viên'
+        },
+        {
+          key: '/organizer/volunteers',
+          icon: <UsergroupAddOutlined />,
+          label: 'Quản lý tình nguyện viên'
         }
       ]
     }

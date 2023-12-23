@@ -2,12 +2,7 @@ import { APP_URL } from '@/constant/AppConstant'
 import { useAppSelector } from '@/hooks/useRedux'
 import useTrans from '@/hooks/useTrans'
 import { logout } from '@/store/appSlice'
-import {
-  BellOutlined,
-  LogoutOutlined,
-  SearchOutlined,
-  SettingOutlined
-} from '@ant-design/icons/lib/icons'
+import { BellOutlined, LogoutOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons/lib/icons'
 import { Col, Dropdown, Input, MenuProps, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { deleteCookie } from 'cookies-next'
@@ -16,7 +11,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 const Appbar = () => {
-  const {user} = useAppSelector(state => state.appSlice)
+  const { user } = useAppSelector(state => state.appSlice)
   const router = useRouter()
   const { trans, lang, changeLanguage } = useTrans()
   const dispatch = useDispatch()
@@ -50,40 +45,42 @@ const Appbar = () => {
   }
 
   return (
-    <Row gutter={32} justify='space-between' align='middle'>
-      <Col flex='1' span='10'>
-        <Input.Search
-          style={{ display: 'flex', margin: '0 auto' }}
-          placeholder={`${trans.common.search}...`}
-          allowClear
-          enterButton={<SearchOutlined />}
-          size='large'
-          onSearch={value => handleSearch(value)}
-        />
-      </Col>
-      <Col flex='1' span='5'>
-        <Row>
-          <Col span={12}>
-            <Dropdown>
-              <div style={{ fontSize: '24px' }}>
-                <BellOutlined />
-              </div>
-            </Dropdown>
-          </Col>
-          <Col style={{ cursor: 'pointer' }} span={12}>
-            <Dropdown menu={{ items }}>
-              <div className='h-full text-2xl flex items-center justify-center'>
-                <img
-                  className='block mx-auto max-w-[32px] max-h-[32px] rounded-[50px]'
-                  alt='userIcon'
-                  src='/userIcon.png'
-                />
-                <p className='text-sm'>Xin chào: {user?.userName}</p>
-              </div>
-            </Dropdown>
-          </Col>
-        </Row>
-      </Col>
+    <React.Fragment>
+      <Row gutter={12} justify='space-between' align='middle'>
+        <Col flex='1' span='10'>
+          <Input.Search
+            style={{ display: 'flex', margin: '0 auto' }}
+            placeholder={`${trans.common.search}...`}
+            allowClear
+            enterButton={<SearchOutlined />}
+            size='large'
+            onSearch={value => handleSearch(value)}
+          />
+        </Col>
+        <Col flex='1' span='3'>
+          <Row>
+            {/* <Col span={12}>
+              <Dropdown>
+                <div style={{ fontSize: '24px' }}>
+                  <BellOutlined />
+                </div>
+              </Dropdown>
+            </Col> */}
+            <Col style={{ cursor: 'pointer' }} span={24}>
+              <Dropdown menu={{ items }}>
+                <div className='h-full text-2xl flex items-center justify-center'>
+                  <img
+                    className='block mx-auto max-w-[32px] max-h-[32px] rounded-[50px]'
+                    alt='userIcon'
+                    src='/userIcon.png'
+                  />
+                  <p className='text-sm'>Xin chào: {user?.userName}</p>
+                </div>
+              </Dropdown>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
       <Modal
         open={isOpenModalLogout}
         title='Bạn sắp đăng xuất?'
@@ -92,8 +89,8 @@ const Appbar = () => {
         okText='Đồng ý'
         cancelText='Hủy'
       ></Modal>
-    </Row>
+    </React.Fragment>
   )
 }
 
-export default React.memo(Appbar)
+export default Appbar

@@ -1,5 +1,5 @@
 import { activityService } from '@/services/activity.service'
-import { Avatar, Button, Card } from 'antd'
+import { Avatar, Badge, Button, Card } from 'antd'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -23,13 +23,26 @@ const ActivityPage = () => {
         {dataActivity &&
           dataActivity.data &&
           dataActivity.data.data.activities.map(item => (
-            <Card key={item.id} style={{ width: 400 }} cover={<img alt='example' src={item.image} />}>
+            <Card
+              key={item.id}
+              style={{ width: 400 }}
+              cover={
+                <div className='col-span-1 w-full'>
+                  <Badge.Ribbon
+                    text={item.status === 0 ? 'Đang mở' : 'Đã đóng'}
+                    color={item.status === 0 ? 'green' : 'red'}
+                  >
+                    <img className='w-full' height={250} src={item.image} />
+                  </Badge.Ribbon>
+                </div>
+              }
+            >
               <Meta
                 avatar={<Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />}
                 title={item.name}
                 description={
                   <div className='flex justify-between items-center'>
-                    <p>{item.creator}</p>
+                    <p>Tổ chức: {item.creator}</p>
                     <Button onClick={() => router.push(`/activity/${item.id}`)}>Xem chi tiết</Button>
                   </div>
                 }

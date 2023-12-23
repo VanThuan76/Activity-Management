@@ -22,7 +22,12 @@ const Home: NextPageWithLayout = () => {
       return activityOpen
     }
   })
-  const { data: dataFeedback } = useQuery(['listFeedback'], () => feedbackService.getAllFeedback())
+  const { data: dataFeedback } = useQuery(['listFeedback'], () => feedbackService.getAllFeedback(), {
+    select(data) {
+      const filterDataFeedbackSystem = data.data.data.feedbacks.filter(feedback => feedback.activity_id === null)
+      return filterDataFeedbackSystem
+    }
+  })
   const { trans } = useTrans()
   return (
     <Fragment>
@@ -33,7 +38,7 @@ const Home: NextPageWithLayout = () => {
       <Section_Home2 />
       <Section_Home3 />
       <Section_Home4 activities={dataActivity as unknown as IActivity[]} />
-      <Section_Home5 faqs={dataFeedback?.data.data.feedbacks as unknown as IFeedback[]} />
+      <Section_Home5 faqs={dataFeedback as unknown as IFeedback[]} />
     </Fragment>
   )
 }

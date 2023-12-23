@@ -23,6 +23,7 @@ import { listActivitesBySkills } from "../controllers/SkillActivitesController";
 import { listFeedBack } from "../controllers/Admin/FeedbackController";
 import { listFeedBackByOrganizer } from "../controllers/Organizer/FeedbackController";
 import { deleteActivityByAdmin } from "../controllers/Admin/ActivityController";
+import { getVolunteer } from "../controllers/Organizer/VolunteerController";
 
 const router = express.Router();
 //Auth
@@ -66,6 +67,8 @@ router.post("/api/v1/reset_password", resetPassword);
     //Activity Applied
     router.get("/api/v1/organizer/applied_volunteer", authenticateToken, checkRoleOrganizer, listApplyVolunteers);
     router.put("/api/v1/organizer/update_applied_volunteer", authenticateToken, checkRoleOrganizer, updateApplyVolunteer);
+    //Volunteers
+    router.get("/api/v1/organizer/volunteers", authenticateToken, checkRoleOrganizer, getVolunteer)
 //User
 router.put("/api/v1/user", authenticateToken, updateProfile);
 router.get("/api/v1/user", authenticateToken, detailUser);

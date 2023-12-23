@@ -30,7 +30,8 @@ const Login = ({}: Props) => {
           login({
             role: decodeData.role_id,
             userName: decodeData.username,
-            id: decodeData.id
+            id: decodeData.id,
+            avatar: decodeData.avatar
           })
         )
         message.success('Đăng nhập thành công')

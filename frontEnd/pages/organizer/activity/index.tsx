@@ -54,8 +54,33 @@ const ActivityManagement = ({}: Props) => {
     },
     {
       title: 'Số lượng tình nguyện viên',
-      dataIndex: 'num_of_volunteers',
-      key: 'num_of_volunteers'
+      key: 'num_of_volunteers',
+      render: (_, record) => (
+        <div className='w-full flex flex-col justify-start items-start gap-3'>
+          <p>Số lượng tình nguyện viên đăng ký: {record.num_of_volunteers}</p>
+          {record.volunteersApplied &&
+            record.volunteersApplied.map(volunteer => (
+              <>
+                <div className='w-2/3 flex justify-between items-center'>
+                  <Image src={volunteer.avatar} width={50} height={50} className='rounded-lg' />
+                  <p>{volunteer.name}</p>
+                </div>
+                <p>
+                  Trạng thái:
+                  {volunteer.status === 0
+                    ? ' Đăng ký'
+                    : volunteer.status === 1
+                    ? ' Phê duyệt'
+                    : volunteer.status === 2
+                    ? ' Không phê duyệt'
+                    : volunteer.status === 3
+                    ? ' Tham gia'
+                    : ' Không tham gia'}
+                </p>
+              </>
+            ))}
+        </div>
+      )
     },
     {
       title: 'Feedbacks',
@@ -132,7 +157,7 @@ const ActivityManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataActivity.data.data.activities} columns={columns} />
+          <Table dataSource={dataActivity.data.data.activities} columns={columns} scroll={{ x: 'max-content' }} />
           {action === 'create' && !rowId ? (
             <FormActivity refetch={refetch} open={open} setOpen={setOpen} />
           ) : (
