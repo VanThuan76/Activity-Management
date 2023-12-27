@@ -18,8 +18,6 @@ const FormSkill = ({ editId, open, setOpen, refetch }: Props) => {
     mutationKey: 'register',
     mutationFn: (body: { name: string; description: string }) => skillService.newSkill(body),
     onSuccess(data, _variables, _context) {
-      const res = data.data
-      if (!res) return
       message.success('Tạo thành công')
       setOpen(false)
       refetch()

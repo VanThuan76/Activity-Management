@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from 'react-query'
 import { Button, Form, Input, message, Modal, Row, Col, DatePicker, Select, SelectProps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { activityService } from '@/services/activity.service'
 import { skillService } from '@/services/skill.service'
+import InputUpload from '@/components/common/UploadInput'
 
 interface Props {
   editId?: number
@@ -11,8 +12,19 @@ interface Props {
   setOpen: any
   refetch: any
 }
+const status = [
+  {
+    lable: 'Đang mở',
+    value: 0,
+  },
+  {
+    lable: 'Đã đóng',
+    value: 1
+  }
+]
 const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm()
+  const [imageUrrl, setImageUrrl] = useState<string | undefined>()
   const isEditIdValidNumber = typeof editId === 'number'
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
@@ -67,11 +79,24 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
   })
   useEffect(() => {
     if (editId && data) {
+      setImageUrrl(data.data.data.image)
       form.setFieldsValue({
         ...data.data.data
       })
     }
   }, [data])
+  const handleImageChange = (newAvatarUrl: string) => {
+    const updatedImageUrl = newAvatarUrl || ''
+    setImageUrrl(updatedImageUrl)
+    // Kiểm tra nếu formData tồn tại, thì cập nhật avatar trong formData
+    if (data) {
+      form.setFieldsValue({
+        // @ts-ignore
+        ...data.data.data.user,
+        image: updatedImageUrl
+      })
+    }
+  }
 
   return (
     <Modal
@@ -101,13 +126,16 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
           <Input />
         </Form.Item>
 
+        <Form.Item label='Hình ảnh' name='image'>
+            <InputUpload initSrc={imageUrrl} onChange={handleImageChange} />
+          </Form.Item>
+          
+        <Form.Item label='Trạng thái' name='status' rules={[{ required: true, message: 'Chưa điền trạng thái' }]}>
+          <Select placeholder='select one status' optionLabelProp='label' options={status} />
+        </Form.Item>
+
         <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
-          <Select
-            mode='multiple'
-            placeholder='select one skills'
-            optionLabelProp='label'
-            options={skills}
-          />
+          <Select mode='multiple' placeholder='select one skills' optionLabelProp='label' options={skills} />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

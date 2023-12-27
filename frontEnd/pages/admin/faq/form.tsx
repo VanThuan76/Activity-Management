@@ -15,11 +15,9 @@ const FormFaq = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm()
   const isEditIdValidNumber = typeof editId === 'number'
   const newMutation = useMutation({
-    mutationKey: 'new',
+    mutationKey: 'newFaq',
     mutationFn: (body: { question: string; answer: string }) => faqService.newFaq(body),
     onSuccess(data, _variables, _context) {
-      const res = data.data
-      if (!res) return
       message.success('Tạo thành công')
       setOpen(false)
       refetch()

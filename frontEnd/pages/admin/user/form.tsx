@@ -55,7 +55,6 @@ const FormUser = ({ editId, open, setOpen, refetch }: Props) => {
   useEffect(() => {
     if (editId && data) {
       const formattedBirthday = dayjs(data.data.data.birthday).format('YYYY-MM-DD')
-
       form.setFieldsValue({
         ...data.data.data,
         birthday: formattedBirthday

@@ -8,23 +8,19 @@ import React, { useState } from 'react'
 import { activityService } from '@/services/activity.service'
 import { IActivity } from '@/typeDefs/schema/activity.type'
 import FormActivity from './form'
+import { useAppSelector } from '@/hooks/useRedux'
 
 type Props = {}
 
 const ActivityManagement = ({}: Props) => {
+  const { user } = useAppSelector(state => state.appSlice)
   const [open, setOpen] = useState(false)
   const [action, setAtion] = useState<string>('')
   const [rowId, setRowId] = useState<number>()
-  const { data: dataActivity, refetch } = useQuery(['listActivty'], () => activityService.getAllActivity())
-  const deleteMutation = useMutation({
-    mutationKey: ['deleteMutation'],
-    mutationFn: (activityId: number) => activityService.deleteActivity(activityId),
-    onSuccess: () => {
-      message.success('Xoá thành công')
-      refetch()
-    },
-    onError() {
-      message.error('Xoá không thành công')
+  const { data: dataActivity, refetch } = useQuery(['listActivty'], () => activityService.getAllActivity(), {
+    select(data) {
+      const filterActivity = data.data.data.activities.filter(activity => activity.creator_id === +user!.id)
+      return filterActivity
     }
   })
   const columns: ColumnType<IActivity>[] = [
@@ -136,7 +132,7 @@ const ActivityManagement = ({}: Props) => {
 
   return (
     <>
-      {dataActivity && dataActivity.data.data && (
+      {dataActivity && (
         <React.Fragment>
           <Row justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
@@ -157,7 +153,7 @@ const ActivityManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataActivity.data.data.activities} columns={columns} scroll={{ x: 'max-content' }} />
+          <Table dataSource={dataActivity} columns={columns} scroll={{ x: 'max-content' }} />
           {action === 'create' && !rowId ? (
             <FormActivity refetch={refetch} open={open} setOpen={setOpen} />
           ) : (
