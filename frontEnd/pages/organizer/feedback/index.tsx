@@ -13,7 +13,6 @@ type Props = {}
 
 const FeedbackManagement = ({}: Props) => {
   const { data: dataFeedback, refetch } = useQuery(['listFeedback'], () => feedbackService.getAllFeedbackOrganizer())
-  console.log(dataFeedback)
   const deleteMutation = useMutation({
     mutationKey: ['deleteMutation'],
     mutationFn: (userId: number) => userService.deleteUser(userId),

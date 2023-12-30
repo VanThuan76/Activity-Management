@@ -29,6 +29,7 @@ const ApplyActivityManagement = ({}: Props) => {
             activity_id: activity.id,
             creator_id: activity.creator_id
           }))
+
         if (!activityIdsAndCreatorIds) return
         const currentApplyActivity = data.data.data.appliedVolunteers.filter(appliedVolunteer => {
           return activityIdsAndCreatorIds.some(({ activity_id }) => activity_id === appliedVolunteer.activity_id)
@@ -37,6 +38,7 @@ const ApplyActivityManagement = ({}: Props) => {
       }
     }
   )
+
   const updateMutation = useMutation({
     mutationKey: ['updateMutation'],
     mutationFn: (body: { user_id: number; status: number }) => activityService.updateApplyActivity(body),
@@ -97,7 +99,7 @@ const ApplyActivityManagement = ({}: Props) => {
                 onConfirm={() => {
                   const body = {
                     user_id: record.user_id,
-                    status: record.status
+                    status: 1
                   }
                   updateMutation.mutate(body)
                 }}

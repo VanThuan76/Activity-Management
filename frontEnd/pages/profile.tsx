@@ -18,7 +18,11 @@ type Props = {
 const Profile = ({ next }: Props) => {
   const [form] = useForm()
   const { user } = useAppSelector(state => state.appSlice)
+  const { data } = useQuery(['userDetail'], () => userService.getUserByAuth())
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(user?.avatar)
+  const [belongsOrgainzer, setBelongsOrgainzer] = useState<number | undefined>(
+    data?.data.data.belongsOrgainzer.organization_id
+  )
   const dispatch = useDispatch()
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
@@ -62,9 +66,9 @@ const Profile = ({ next }: Props) => {
     updateProfile.mutate(value)
     next()
   }
-  const { data } = useQuery(['userDetail'], () => userService.getUserByAuth())
   useEffect(() => {
     if (user && data) {
+      setBelongsOrgainzer(data.data.data.belongsOrgainzer.organization_id)
       form.setFieldsValue({
         // @ts-ignore
         ...data.data.data.user
@@ -93,7 +97,6 @@ const Profile = ({ next }: Props) => {
       })
     }
   }
-
   return (
     <React.Fragment>
       <Card
@@ -153,15 +156,21 @@ const Profile = ({ next }: Props) => {
           <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
             <Select mode='multiple' placeholder='select one skills' optionLabelProp='label' options={skills} />
           </Form.Item>
-          {data?.data.data.belongsOrgainzer === null && (
-            <Form.Item
-              label='Thuộc tổ chức'
-              name='belongsOrgainzer'
-              rules={[{ required: true, message: 'Chưa điền tổ chức' }]}
-            >
-              <Select placeholder='select one belongsOrgainzer' optionLabelProp='label' options={organizers} />
-            </Form.Item>
-          )}
+
+          <Form.Item
+            label='Thuộc tổ chức'
+            name='belongsOrgainzer'
+            rules={[{ required: true, message: 'Chưa điền tổ chức' }]}
+          >
+            {belongsOrgainzer && (
+              <Select
+                defaultValue={belongsOrgainzer}
+                placeholder='select one belongsOrgainzer'
+                optionLabelProp='label'
+                options={organizers}
+              />
+            )}
+          </Form.Item>
           <Form.Item style={{ textAlign: 'center' }}>
             <Button type='primary' htmlType='submit' loading={updateProfile.isLoading}>
               Cập nhật
