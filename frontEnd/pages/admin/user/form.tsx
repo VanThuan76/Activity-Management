@@ -126,7 +126,7 @@ const FormUser = ({ editId, open, setOpen, refetch }: Props) => {
         </Form.Item>
 
         <Form.Item label='Mật khẩu' name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
-          <Input.Password />
+          <Input.Password visibilityToggle={false} />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

@@ -22,8 +22,8 @@ const sequelize = new Sequelize({
   host: '127.0.0.1',
   port: 3306,
   username: 'root',
-  password: 'vanthuan76',
-  database: 'activity_management',
+  password: '',
+  database: 'activity_management',  //
   pool: {
     ...dbConfig,
     max: 10,

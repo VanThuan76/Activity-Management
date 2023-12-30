@@ -117,7 +117,7 @@ const DetailActivity = ({ activity }: Props) => {
             </List.Item>
           )}
         />
-        {user && (
+        {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
           <Card title='Feedback'>
             <Form
               name='newFeedback'
@@ -139,6 +139,8 @@ const DetailActivity = ({ activity }: Props) => {
               </Form.Item>
             </Form>
           </Card>
+        ) : (
+          <></>
         )}
       </section>
     </React.Fragment>

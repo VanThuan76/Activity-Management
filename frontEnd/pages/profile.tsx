@@ -23,6 +23,7 @@ const Profile = ({ next }: Props) => {
   const [belongsOrgainzer, setBelongsOrgainzer] = useState<number | undefined>(
     data?.data.data.belongsOrgainzer.organization_id
   )
+  const [skillsDefault, setSkillsDefault] = useState<any[] | undefined>(data?.data.data.skills?.map(skill => skill.id))
   const dispatch = useDispatch()
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
@@ -69,6 +70,7 @@ const Profile = ({ next }: Props) => {
   useEffect(() => {
     if (user && data) {
       setBelongsOrgainzer(data.data.data.belongsOrgainzer.organization_id)
+      setSkillsDefault(data.data.data.skills?.map(skill => skill.id))
       form.setFieldsValue({
         // @ts-ignore
         ...data.data.data.user
@@ -154,7 +156,15 @@ const Profile = ({ next }: Props) => {
           </Form.Item>
 
           <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
-            <Select mode='multiple' placeholder='select one skills' optionLabelProp='label' options={skills} />
+            {skillsDefault && (
+              <Select
+                defaultValue={skillsDefault}
+                mode='multiple'
+                placeholder='select one skills'
+                optionLabelProp='label'
+                options={skills}
+              />
+            )}
           </Form.Item>
 
           <Form.Item
@@ -178,6 +188,14 @@ const Profile = ({ next }: Props) => {
           </Form.Item>
         </Form>
       </Card>
+      {data && data.data.data.activityApplied && (
+        <>
+        <p>Các hoạt động đã tham gia:</p>
+        {data.data.data.activityApplied.map((item:any) => (
+          <p>{item.activity_id}</p>
+        ))}
+        </>
+      )}
     </React.Fragment>
   )
 }
