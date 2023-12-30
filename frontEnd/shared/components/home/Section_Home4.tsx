@@ -30,7 +30,7 @@ const Section_Home4 = ({ activities }: Props) => {
               }
             >
               <Meta
-                avatar={<Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />}
+                avatar={<Avatar src={item.image} />}
                 title={item.name}
                 description={
                   <div className='flex justify-between items-center'>
