@@ -49,6 +49,14 @@ export const updateProfile = async (
           await SkillUsers.create(skill);
         }
       }
+      const requestApplyOrganizer = {
+        user_id: Number(userId) as number,
+        organization_id: Number(req.body.belongsOrgainzer) as number,
+        status: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+      await VolunteerRequest.create(requestApplyOrganizer);
       const body = req.body;
       delete body.role_id;
       delete body.organization_id;

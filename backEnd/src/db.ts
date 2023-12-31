@@ -1,12 +1,12 @@
-import { Sequelize } from 'sequelize';
-import { createPool, Pool, PoolOptions } from 'mysql2/promise';
+import { Sequelize } from "sequelize";
+import { createPool, Pool, PoolOptions } from "mysql2/promise";
 
 const dbConfig: PoolOptions = {
-  host: '127.0.0.1',
+  host: "127.0.0.1",
   port: 3306,
-  user: 'root',
-  password: '',
-  database: 'activity_management',
+  user: "root",
+  password: "vanthuan76",
+  database: "student_management",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -15,15 +15,14 @@ const dbConfig: PoolOptions = {
 const dbConnection: Pool = createPool(dbConfig);
 export default dbConnection;
 
-
 const sequelize = new Sequelize({
-  dialect: 'mysql',
-  dialectModule: require('mysql2'),
-  host: '127.0.0.1',
+  dialect: "mysql",
+  dialectModule: require("mysql2"),
+  host: "127.0.0.1",
   port: 3306,
-  username: 'root',
-  password: '',
-  database: 'activity_management',  //
+  username: "root",
+  password: "vanthuan76",
+  database: "student_management", //
   pool: {
     ...dbConfig,
     max: 10,
@@ -32,6 +31,5 @@ const sequelize = new Sequelize({
     idle: 10000,
   },
 });
-
 
 export { sequelize };

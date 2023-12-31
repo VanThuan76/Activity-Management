@@ -10,6 +10,9 @@ class ActivityService {
   applyActivity(body: { activity_id: number }) {
     return https.post('/apply_volunteer', body)
   }
+  cancelActivity(body: { activity_id: number }) {
+    return https.post('/cancel_volunteer', body)
+  }
   getActivityById(id: number): Promise<AxiosResponse<IBaseResponse<IActivity>>> {
     return httpsNoToken.get(`/activities/${id}`)
   }

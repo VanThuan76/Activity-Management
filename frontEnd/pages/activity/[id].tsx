@@ -49,6 +49,20 @@ const DetailActivity = ({ activity }: Props) => {
       message.error('Đăng ký không thành công')
     }
   })
+
+  const cancelActivityMutation = useMutation({
+    mutationKey: 'cancelActivity',
+    mutationFn: (body: { activity_id: number }) => activityService.cancelActivity(body),
+    onSuccess(data, _variables, _context) {
+      if (data) {
+        message.success('Đăng ký thành công')
+      }
+    },
+    onError(error, variables, context) {
+      message.error('Đăng ký không thành công')
+    }
+  })
+
   function handleNewFeedback(value: any) {
     const body = {
       activity_id: activity.data.id,
@@ -85,7 +99,12 @@ const DetailActivity = ({ activity }: Props) => {
             {activity.data.status === 0 && user ? (
               <>
                 {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
-                  <p>Bạn đã đăng ký</p>
+                  <>
+                   <p>Bạn đã đăng ký</p>
+                  <Button onClick={() => cancelActivityMutation.mutate({ activity_id: activity.data.id })}>
+                  Huỷ đăng ký
+                </Button>
+                  </>
                 ) : (
                   <Button onClick={() => applyActivityMutation.mutate({ activity_id: activity.data.id })}>
                     Đăng ký

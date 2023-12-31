@@ -73,3 +73,58 @@ export const applyVolunteer = async (
     commonResponse(req, res, response);
   }
 };
+export const cancelApplyActivity = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    const decodedToken = jwt.verify(token, secretKey) as jwt.JwtPayload;
+    const userId = decodedToken.id;
+    const user = await Users.findByPk(userId);
+    if (user) {
+      if (user.organization_id && user.role_id === 2) {
+        const response: GeneralResponse<{}> = {
+          status: 400,
+          data: null,
+          message: "Have an organization or you're an organization",
+        };
+        commonResponse(req, res, response);
+      } else {
+        const result = await ActivityApply.destroy({
+          where: {
+            user_id: userId,
+            activity_id: req.body.activity_id,
+          },
+        });
+        if (result > 0) {
+          const response: GeneralResponse<{}> = {
+            status: 200,
+            data: null,
+            message: "Delete successful",
+          };
+          commonResponse(req, res, response);
+        } else {
+          const response: GeneralResponse<{}> = {
+            status: 400,
+            data: null,
+            message: "No matching records found to delete",
+          };
+          commonResponse(req, res, response);
+        }
+      }
+    }
+  } catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};
