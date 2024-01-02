@@ -73,7 +73,7 @@ const FormFaq = ({ editId, open, setOpen, refetch }: Props) => {
         </Form.Item>
 
         <Form.Item label='Câu trả lời' name='answer' rules={[{ required: true, message: 'Chưa điền câu trả lời' }]}>
-          <Input />
+          <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

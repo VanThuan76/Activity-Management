@@ -47,7 +47,7 @@ const OrganizationManagement = ({}: Props) => {
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description'
+      render: (_, record) => <p style={{ whiteSpace: 'pre-line' }}>{record.description}</p>
     },
     {
       title: 'Địa chỉ',

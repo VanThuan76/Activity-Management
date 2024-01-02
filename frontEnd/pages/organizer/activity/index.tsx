@@ -41,7 +41,8 @@ const ActivityManagement = ({}: Props) => {
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      render: (_, record) => (<p style={{whiteSpace: 'pre-line'}}>{record.description}</p>)
     },
     {
       title: 'Địa điểm',
@@ -52,7 +53,7 @@ const ActivityManagement = ({}: Props) => {
       title: 'Số lượng tình nguyện viên',
       key: 'num_of_volunteers',
       render: (_, record) => (
-        <div className='w-full flex flex-col justify-start items-start gap-3'>
+        <div className='w-full pr-5 max-h-[300px] overflow-y-scroll flex flex-col justify-start items-start gap-3'>
           <p>Số lượng tình nguyện viên đăng ký: {record.num_of_volunteers}</p>
           {record.volunteersApplied &&
             record.volunteersApplied.map(volunteer => (

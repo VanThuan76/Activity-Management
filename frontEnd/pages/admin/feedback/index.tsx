@@ -92,7 +92,7 @@ const FeedbackManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataFeedback.data.data.feedbacks} columns={columns} />
+          <Table dataSource={dataFeedback.data.data.feedbacks.filter(item => item.activity_id === null)} columns={columns} />
         </React.Fragment>
       )}
     </>

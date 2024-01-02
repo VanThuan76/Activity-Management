@@ -104,6 +104,7 @@ export const createOrganization = async (
         created_at: new Date(),
         updated_at: new Date(),
       };
+      await Organization.destroy({where: {creator: userId}})
       const result = await Organization.create(body);
       if (result) {
         const response: GeneralResponse<{}> = {

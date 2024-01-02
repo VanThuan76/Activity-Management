@@ -44,8 +44,8 @@ const FAQManagement = ({}: Props) => {
     },
     {
       title: 'Trả lời',
-      dataIndex: 'answer',
-      key: 'answer'
+      key: 'answer',
+      render: (_, record) => <div style={{ whiteSpace: 'pre-line' }}>{record.answer}</div>
     },
     {
       title: 'Ngày tạo',

@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from 'react-query'
-import { Button, Form, Input, message, Modal, Row, Col, DatePicker, Select, SelectProps } from 'antd'
+import { Button, Form, Input, message, Modal, Row, Col, DatePicker, Select } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useEffect, useState } from 'react'
 import { activityService } from '@/services/activity.service'
 import { skillService } from '@/services/skill.service'
 import InputUpload from '@/components/common/UploadInput'
+import dayjs from 'dayjs'
 
 interface Props {
   editId?: number
@@ -15,7 +16,7 @@ interface Props {
 const status = [
   {
     lable: 'Đang mở',
-    value: 0,
+    value: 0
   },
   {
     lable: 'Đã đóng',
@@ -37,6 +38,20 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
       return res
     }
   })
+  const { data: skillsEdit } = useQuery(['skillsEdit'], () => skillService.getAllSkill(), {
+    select(data) {
+      const result = data.data.data
+      if (!result) return
+      const res = result.skills
+        .filter(skill => skill.id === editId)
+        .map(skill => ({
+          label: skill.name,
+          value: skill.id
+        }))
+      return res
+    }
+  })
+  const [skillsDefault, setSkillsDefault] = useState<any[] | undefined>(skillsEdit)
   const newMutation = useMutation({
     mutationKey: 'NewActivity',
     mutationFn: (body: { name: string; description: string; location: string; skills: string[] }) =>
@@ -119,7 +134,7 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
         </Form.Item>
 
         <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Chưa điền mô tả' }]}>
-          <Input />
+          <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} />
         </Form.Item>
 
         <Form.Item label='Địa điểm' name='location' rules={[{ required: true, message: 'Chưa điền địa điểm' }]}>
@@ -127,15 +142,49 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
         </Form.Item>
 
         <Form.Item label='Hình ảnh' name='image'>
-            <InputUpload initSrc={imageUrrl} onChange={handleImageChange} />
-          </Form.Item>
-          
+          <InputUpload initSrc={imageUrrl} onChange={handleImageChange} />
+        </Form.Item>
+
+        <Form.Item
+          label='Từ ngày'
+          name='from_at'
+          rules={[{ required: true, message: 'Chưa điền từ ngày' }]}
+          getValueFromEvent={onChange => dayjs(onChange).format('YYYY-MM-DD')}
+          getValueProps={i => ({ value: dayjs(i) })}
+        >
+          <DatePicker />
+        </Form.Item>
+
+        <Form.Item
+          label='Đến ngày'
+          name='to_at'
+          rules={[{ required: true, message: 'Chưa điền đến ngày' }]}
+          getValueFromEvent={onChange => dayjs(onChange).format('YYYY-MM-DD')}
+          getValueProps={i => ({ value: dayjs(i) })}
+        >
+          <DatePicker />
+        </Form.Item>
+
+        <Form.Item
+          label='Số lượng TN tối đa'
+          name='max_of_volunteers'
+          rules={[{ required: true, message: 'Chưa điền số lượng TN tối đa' }]}
+        >
+          <Input type='number' />
+        </Form.Item>
+
         <Form.Item label='Trạng thái' name='status' rules={[{ required: true, message: 'Chưa điền trạng thái' }]}>
           <Select placeholder='select one status' optionLabelProp='label' options={status} />
         </Form.Item>
 
         <Form.Item label='Kỹ năng' name='skills' rules={[{ required: true, message: 'Chưa điền kỹ năng' }]}>
-          <Select mode='multiple' placeholder='select one skills' optionLabelProp='label' options={skills} />
+          <Select
+            defaultValue={skillsDefault && skillsDefault}
+            mode='multiple'
+            placeholder='select one skills'
+            optionLabelProp='label'
+            options={skills}
+          />
         </Form.Item>
 
         <Row justify={'center'} align={'middle'} gutter={16}>

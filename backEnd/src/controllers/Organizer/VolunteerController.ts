@@ -36,6 +36,7 @@ export const getVolunteer = async (
         const volunteerRequest = await VolunteerRequest.findAll({
           where: {
             organization_id: user.id,
+            status: 0
           },
         });
         const volunteerRequestMapped = await volunteerRequestMapper(

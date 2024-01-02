@@ -17,6 +17,7 @@ export const listUser = async (req: Request, res: Response): Promise<void> => {
         },
         status: 0,
       },
+      attributes: { exclude: ['password'] }
     });
     const response: GeneralResponse<{ users: UserAttributes[] }> = {
       status: 200,

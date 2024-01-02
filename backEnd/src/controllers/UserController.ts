@@ -10,8 +10,9 @@ import {
 } from "../models/volunteer_request";
 import {
   ActivityApply,
-  ActivityApplyAttributes,
 } from "../models/activity_apply";
+import { activityApplyMapper } from "../mapper/ActivityApplyMapper";
+import { Skills } from "../models/skills";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -45,6 +46,7 @@ export const updateProfile = async (
           created_at: new Date(),
           updated_at: new Date(),
         }));
+        await SkillUsers.destroy({where: {user_id: userId}})
         for (const skill of skills) {
           await SkillUsers.create(skill);
         }
@@ -56,6 +58,7 @@ export const updateProfile = async (
         created_at: new Date(),
         updated_at: new Date(),
       };
+      await VolunteerRequest.destroy({where: {user_id: userId , organization_id: req.body.belongsOrgainzer}})
       await VolunteerRequest.create(requestApplyOrganizer);
       const body = req.body;
       delete body.role_id;
@@ -105,7 +108,12 @@ export const detailUser = async (
     const userSkills = await SkillUsers.findAll({
       where: { user_id: userId },
     });
-
+    const skillIds = userSkills.map(skill => skill.skill_id);
+    const skills = await Skills.findAll({ where: { id: skillIds } });
+    const skillsWithDetails = userSkills.map(activity => {
+      const skill = skills.find(skill => skill.id === activity.skill_id);
+      return skill;
+    });
     const userOrgainzer = await VolunteerRequest.findOne({
       where: { user_id: userId },
     });
@@ -113,17 +121,18 @@ export const detailUser = async (
     const userActivity = await ActivityApply.findAll({
       where: { user_id: userId },
     });
+    const activityMapper = await activityApplyMapper(userActivity)
     const response: GeneralResponse<{
       user: UserAttributes;
-      skills: SkillUsers[];
-      activityApplied: ActivityApplyAttributes[];
+      skills: any[];
+      activityApplied: any[];
       belongsOrgainzer: VolunteerRequestAttributes | null;
     }> = {
       status: 200,
       data: {
         user: user.toJSON() as UserAttributes,
-        skills: userSkills,
-        activityApplied: userActivity,
+        skills: skillsWithDetails,
+        activityApplied: activityMapper,
         belongsOrgainzer: userOrgainzer,
       },
       message: "User details retrieved successfully",

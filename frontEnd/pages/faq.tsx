@@ -12,7 +12,7 @@ const FAQPage = () => {
       <div className='mt-5 flex flex-col justify-center items-center'>
         <h1 className='text-4xl leading-8 text-bold text-[#0F147F] border-b-2 border-b-black'>FAQ</h1>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5'>
         {dataFaq &&
           dataFaq.data.data &&
           dataFaq.data.data.faqs.map(faq => (

@@ -2,7 +2,8 @@ import {
   ContactsOutlined,
   QuestionCircleOutlined,
   ExpandAltOutlined,
-  UserOutlined
+  UserOutlined,
+  GroupOutlined
 } from '@ant-design/icons'
 import { Button, Layout, Menu, MenuProps } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -37,6 +38,11 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
       label: 'Hoạt động',
       key: 'activity',
       icon: <ContactsOutlined />
+    },
+    {
+      label: 'Nhà tổ chức',
+      key: 'organization',
+      icon: <GroupOutlined />
     },
     {
       label: 'Về chúng tôi',
@@ -74,12 +80,12 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
             items={APP_WEBSITE_MENU}
           />
           <Search
-            className='col-span-2 bg-blue-300 rounded-lg'
+            className='col-span-1 bg-blue-300 rounded-lg'
             placeholder='Tìm kiếm'
             onSearch={() => {}}
             enterButton
           />
-          <div className='flex justify-end items-center gap-4'>
+          <div className='col-span-2 w-full flex justify-end items-center gap-4'>
             {user && <UserOutlined onClick={() => router.push('/profile')} />}
             {!user && <Button onClick={() => router.push('/login')}>Đăng nhập</Button>}
             {user && Number(user?.role) === 3 && <Button onClick={() => router.push('/admin/user')}>ADMIN</Button>}

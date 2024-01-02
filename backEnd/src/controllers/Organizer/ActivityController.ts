@@ -34,8 +34,11 @@ export const createActivity = async (
         description: req.body.description as string,
         location: req.body.location as string,
         num_of_volunteers: 0,
+        max_of_volunteers: req.body.max_of_volunteers,
         image: req.body.image as string,
         status: 1,
+        from_at: req.body.from_at,
+        to_at: req.body.to_at,
         created_at: new Date(),
         updated_at: new Date(),
       };

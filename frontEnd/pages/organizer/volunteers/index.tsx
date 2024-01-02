@@ -5,15 +5,17 @@ import DashboardLayout from '@/layouts/DashboardLayout'
 import { useQuery } from 'react-query'
 import React from 'react'
 import { volunteerService } from '@/services/volunteer.service'
-import { IVolunteerGroupOrganizer } from '@/typeDefs/schema/volunteer.type'
+import { IRequestVolunteer } from '@/typeDefs/schema/volunteer.type'
+import { useAppSelector } from '@/hooks/useRedux'
 
 type Props = {}
 
 const VolunteersManagement = ({}: Props) => {
+  const { user } = useAppSelector(state => state.appSlice)
   const { data: dataVolunteer, refetch } = useQuery(['listVolunteer'], () =>
     volunteerService.getVolunteerGroupOrganizer()
   )
-  const columns: ColumnType<IVolunteerGroupOrganizer>[] = [
+  const columns: ColumnType<IRequestVolunteer>[] = [
     {
       title: '#',
       key: 'id',
@@ -35,6 +37,19 @@ const VolunteersManagement = ({}: Props) => {
         <>
           <Image src={record.avatar} width={50} height={50} className='rounded-lg' />
         </>
+      )
+    },
+    {
+      title: 'Hoạt động đăng ký',
+      dataIndex: 'activity_id',
+      render: (_, record) => (
+        <div className='flex flex-col flex-wrap justify-start items-start gap-3'>
+          {record.volunteersApplied
+            ?.filter(activity => activity.organizer === user?.id)
+            .map(activity => (
+              <p>{activity.name}</p>
+            ))}
+        </div>
       )
     },
     {

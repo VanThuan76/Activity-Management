@@ -1,4 +1,6 @@
 import { IFeedback } from './feedback.type'
+import { IOrganization } from './organization.type'
+import { ISkill } from './skill.type'
 
 export interface IActivityList {
   activities: IActivity[]
@@ -12,10 +14,15 @@ export interface IActivity {
   image: string
   location: string
   num_of_volunteers: number
+  max_of_volunteers: number
+  from_at: string;
+  to_at: string;
   status: number
   created_at: string
   updated_at: string
   feedback?: IFeedback[]
+  skillsActivity?: ISkill[]
+  inforOrganizer?: IOrganization
   volunteersApplied?: IAppliedVolunteerMapped[]
 }
 export interface IAppliedVolunteers {
@@ -23,19 +30,26 @@ export interface IAppliedVolunteers {
 }
 
 export interface IAppliedVolunteer {
-  id: number
-  user_id: number
-  activity_id: number
-  status: number
-  created_at: string
-  updated_at: string
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  avatar: string;
+  organizer: number;
+  status: number;
+  user_id:number;
+  activity_id: number;
+  created_at: string;
+  updated_at: string;
+  activity?: IActivity
 }
 
-interface IAppliedVolunteerMapped {
+export interface IAppliedVolunteerMapped {
   id: number
   name: string
   avatar: string
   status: number
+  organizer?: number
   created_at: string
   updated_at: string
 }

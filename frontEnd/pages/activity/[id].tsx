@@ -21,6 +21,7 @@ const DetailActivity = ({ activity }: Props) => {
       return data.data.data.activityApplied
     }
   })
+  const currentDate = new Date()
   const router = useRouter()
   const { user } = useAppSelector(state => state.appSlice)
   const newFeedbackMutation = useMutation({
@@ -94,27 +95,61 @@ const DetailActivity = ({ activity }: Props) => {
               <h1>Tên: {activity.data.name}</h1>
               <h2>Địa điểm: {activity.data.location}</h2>
             </div>
-            <h3>Nội dung: {activity.data.description}</h3>
-            <p>Số lượng TN đã tham dự: {activity.data.num_of_volunteers}</p>
-            {activity.data.status === 0 && user ? (
+            <div className='flex flex-col'>
+              <h3>Kỹ năng</h3>
+              <div className='flex flex-wrap justify-start items-start gap-3'>
+                {activity.data.skillsActivity?.map((skill, index) => (
+                  <p key={index} className='border-2 border-blue-700'>
+                    {skill.name}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <h3 style={{whiteSpace: 'pre-line'}}>Nội dung: {activity.data.description}</h3>
+            <div className='w-full flex justify-between items-center'>
+              <p>Số lượng TN đã tham dự: {activity.data.num_of_volunteers}</p>
+              <p>Số lượng TN tối đa: {activity.data.max_of_volunteers}</p>
+            </div>
+            <div className='w-full flex justify-between items-center'>
+              <p>Thời gian tham gia: {activity.data.from_at}</p>
+              <p>Thời gian kết thúc: {activity.data.to_at}</p>
+            </div>
+            {activity.data.num_of_volunteers === activity.data.max_of_volunteers ||
+            new Date(activity.data.to_at).getTime() < currentDate.getTime() ? (
               <>
-                {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
+                <p>Đã đủ TN viên tham gia hoặc hoạt động hết hạn tham gia</p>
+              </>
+            ) : (
+              <>
+                {activity.data.status === 0 && user ? (
                   <>
-                   <p>Bạn đã đăng ký</p>
-                  <Button onClick={() => cancelActivityMutation.mutate({ activity_id: activity.data.id })}>
-                  Huỷ đăng ký
-                </Button>
+                    {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
+                      <>
+                        <p>Bạn đã đăng ký</p>
+                        <Button onClick={() => cancelActivityMutation.mutate({ activity_id: activity.data.id })}>
+                          Huỷ đăng ký
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          applyActivityMutation.mutate({ activity_id: activity.data.id })
+                          setTimeout(() => {
+                            router.push('/activity')
+                            message.success('Đăng ký thành công')
+                          }, 500)
+                        }}
+                      >
+                        Đăng ký
+                      </Button>
+                    )}
                   </>
                 ) : (
-                  <Button onClick={() => applyActivityMutation.mutate({ activity_id: activity.data.id })}>
-                    Đăng ký
+                  <Button onClick={() => (!user ? router.push('/login') : router.push('/activity'))}>
+                    Vui lòng đăng ký tài khoản hoặc chờ hoạt động khác
                   </Button>
                 )}
               </>
-            ) : (
-              <Button onClick={() => (!user ? router.push('/login') : router.push('/activity'))}>
-                Vui lòng đăng ký tài khoản hoặc chờ hoạt động khác
-              </Button>
             )}
           </div>
         </div>

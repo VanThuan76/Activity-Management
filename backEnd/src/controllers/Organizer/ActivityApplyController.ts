@@ -11,6 +11,7 @@ import {
   ActivityApplyAttributes,
 } from "../../models/activity_apply";
 import { Activities } from "../../models/activities";
+import { activityApplyMapper } from "../../mapper/ActivityApplyMapper";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -37,12 +38,13 @@ export const listApplyVolunteers = async (
         where: { creator: organizerId },
       });
       const activityIds = activityExits.map((activity) => activity.id);
-      const appliedVolunteers = await ActivityApply.findAll({
+      const appliedVolunteersCurrent = await ActivityApply.findAll({
         where: { activity_id: activityIds },
       });
+      const appliedVolunteers = await activityApplyMapper(appliedVolunteersCurrent)
       if (appliedVolunteers.length > 0) {
         const response: GeneralResponse<{
-          appliedVolunteers: ActivityApplyAttributes[];
+          appliedVolunteers: any[];
         }> = {
           status: 200,
           data: { appliedVolunteers },

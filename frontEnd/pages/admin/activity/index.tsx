@@ -48,12 +48,6 @@ const ActivityManagement = ({}: Props) => {
       dataIndex: 'location',
       key: 'location'
     },
-
-    {
-      title: 'Số lượng tình nguyện viên',
-      dataIndex: 'num_of_volunteers',
-      key: 'num_of_volunteers'
-    },
     {
       title: 'Hình ảnh',
       key: 'status',

@@ -63,12 +63,18 @@ const ApplyActivityManagement = ({}: Props) => {
     {
       title: 'Tên người đăng ký',
       dataIndex: 'user_id',
-      render: (_, record) => <p>{record.user_id}</p>
+      render: (_, record) => (
+        <div className='flex flex-col justify-start items-start gap-3'>
+          <p>{record.name}</p>
+          <p>{record.email}</p>
+          <p>{record.phone}</p>
+        </div>
+      )
     },
     {
-      title: 'Tên hoat dong',
+      title: 'Tên hoạt động',
       dataIndex: 'name_organizer',
-      render: (_, record) => <p>{record.activity_id}</p>
+      render: (_, record) => <p>{record.activity?.name}</p>
     },
     {
       title: 'Trạng thái',

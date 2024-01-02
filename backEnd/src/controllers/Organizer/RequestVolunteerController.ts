@@ -10,6 +10,7 @@ import {
   VolunteerRequestAttributes,
 } from "../../models/volunteer_request";
 import { Users } from "../../models/users";
+import { volunteerRequestMapper } from "../../mapper/VolunteerRequestMapper";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -33,12 +34,13 @@ export const listRequestVolunteers = async (
       },
     });
     if (organizer) {
-      const requestVolunteers = await VolunteerRequest.findAll({
+      const requestVolunteersCurrent = await VolunteerRequest.findAll({
         where: { organization_id: organizerId },
       });
+      const requestVolunteers = await volunteerRequestMapper(requestVolunteersCurrent); // Sử dụng hàm mapper
       if (requestVolunteers.length > 0) {
         const response: GeneralResponse<{
-          requestVolunteers: VolunteerRequestAttributes[];
+          requestVolunteers: any[];
         }> = {
           status: 200,
           data: { requestVolunteers },

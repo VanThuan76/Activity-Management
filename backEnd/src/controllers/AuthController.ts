@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { UserAttributes, Users } from "../models/users";
 import { GeneralResponse, commonResponse } from "../utilities/CommonResponse";
 import * as dotenv from "dotenv";
+import bcrypt from "bcrypt";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -13,18 +14,29 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       where: {
         username,
         password,
-        status: 0
+        status: 0,
       },
     });
     if (account) {
-      const user = account.toJSON();
-      const token = jwt.sign(user, secretKey);
-      const response: GeneralResponse<{ token: string }> = {
-        status: 200,
-        data: { token },
-        message: "Success: User logged in successfully!",
-      };
-      commonResponse(req, res, response);
+      // const isPasswordValid = await bcrypt.compare(password, account.password);
+      const isPasswordValid = true;
+      if (isPasswordValid) {
+        const user = account.toJSON();
+        const token = jwt.sign(user, secretKey);
+        const response: GeneralResponse<{ token: string }> = {
+          status: 200,
+          data: { token },
+          message: "Success: User logged in successfully!",
+        };
+        commonResponse(req, res, response);
+      } else {
+        const response = {
+          status: 401,
+          data: null,
+          message: "Invalid username or password",
+        };
+        commonResponse(req, res, response);
+      }
     } else {
       const response: GeneralResponse<null> = {
         status: 401,
@@ -61,9 +73,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ message: "Account already exists!" });
       return;
     }
+    const hashedPassword = await bcrypt.hash(password, 10); // Thay đổi số vòng lặp nếu cần
     const user = await Users.create({
       username,
-      password,
+      password: hashedPassword,
       role_id: 1,
       organization_id: null,
       name,
@@ -72,7 +85,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       gender,
       birthday,
       address,
-      avatar: '',
+      avatar: "",
       status: 0,
       created_at: new Date(),
       updated_at: new Date(),

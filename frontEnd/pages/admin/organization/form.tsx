@@ -79,7 +79,7 @@ const FormOrganization = ({ editId, open, setOpen, refetch }: Props) => {
         </Form.Item>
 
         <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Chưa điền mô tả' }]}>
-          <Input />
+          <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} />
         </Form.Item>
 
         <Form.Item label='Trạng thái' name='status' rules={[{ required: true, message: 'Chưa điền trạng thái' }]}>

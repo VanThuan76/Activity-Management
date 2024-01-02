@@ -52,7 +52,7 @@ const FormCreateOrganization = ({ next }: Props) => {
           </Form.Item>
 
           <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
-            <Input.TextArea />
+            <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} />
           </Form.Item>
           <Form.Item style={{ textAlign: 'center' }}>
             <Button type='primary' htmlType='submit' loading={newOrganizationMutation.isLoading}>

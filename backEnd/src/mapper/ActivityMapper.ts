@@ -4,6 +4,9 @@ import { Feedback } from "../models/feedback";
 import { feedbackMapper } from "./FeedbackMapper";
 import { ActivityApply } from "../models/activity_apply";
 import { activityApplyMapper } from "./ActivityApplyMapper";
+import { Organization } from "../models/organization";
+import { SkillActivities } from "../models/skill_activities";
+import { Skills } from "../models/skills";
 
 export const mappedActivities = (activities: ActivityAttributes[]) => {
   const result = activities.map(async (activity) => {
@@ -13,7 +16,9 @@ export const mappedActivities = (activities: ActivityAttributes[]) => {
       description,
       image,
       location,
-      num_of_volunteers,
+      max_of_volunteers,
+      from_at,
+      to_at,
       status,
       created_at,
       updated_at,
@@ -31,6 +36,14 @@ export const mappedActivities = (activities: ActivityAttributes[]) => {
       const countVolunteersApplied = await ActivityApply.count({
         where: { activity_id: id },
       });
+      const skillsActivity = await SkillActivities.findAll({where: {activity_id: id}})
+      const skillIds = skillsActivity.map(skill => skill.skill_id);
+      const skills = await Skills.findAll({ where: { id: skillIds } });
+      const skillsWithDetails = skillsActivity.map(activity => {
+        const skill = skills.find(skill => skill.id === activity.skill_id);
+        return skill;
+      });
+      const inforOrganizer = await Organization.findOne({where: {id: creatorId}})
       return {
         id,
         name,
@@ -38,12 +51,17 @@ export const mappedActivities = (activities: ActivityAttributes[]) => {
         image,
         location,
         num_of_volunteers: countVolunteersApplied,
+        max_of_volunteers,
+        from_at,
+        to_at,
         status,
         created_at,
         updated_at,
+        skillsActivity: skillsWithDetails,
         creator_id: creatorId,
         creator: creatorName,
         feedback: mappedFeedbacks,
+        inforOrganizer: inforOrganizer,
         volunteersApplied: mappedVolunteersApplied,
       };
     } catch (error) {

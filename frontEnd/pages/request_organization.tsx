@@ -29,7 +29,7 @@ const RequestOrganization = () => {
   })
 
   function handleRequest() {
-    requestBecomeOrganizationMutation.mutate({ organization_id: inforOrganization?.id || 0 })
+    requestBecomeOrganizationMutation.mutate({ organization_id: inforOrganization!.id })
   }
   const steps = [
     {
