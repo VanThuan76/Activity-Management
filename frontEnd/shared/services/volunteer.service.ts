@@ -13,6 +13,9 @@ class VolunteerService {
   getVolunteerGroupOrganizer(): Promise<AxiosResponse<IBaseResponse<IVolunteerGroupOrganizer>>> {
     return https.get('/organizer/volunteers')
   }
+  removeVolunteerByOrganizer({ id }: { id: number }) {
+    return https.delete(`/organizer/volunteers/${id}`)
+  }
 }
 
 export const volunteerService = new VolunteerService()

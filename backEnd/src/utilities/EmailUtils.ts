@@ -12,15 +12,15 @@ class EmailUtils {
         this.transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: 'hung@gmail.com', //
-                pass: 'msd232 msj213 sdj22', //
+                user: 'hungphiquoc1@gmail.com', //
+                pass: 'udjm qshx slip hqsb', //
             },
         });
     }
 
     sendEmail(receiverEmail: string, emailDetails: EmailDetails): void {
         const mailOptions: nodemailer.SendMailOptions = {
-            from: 'hung@gmail.com',
+            from: 'hungphiquoc1@gmail.com',
             to: receiverEmail,
             subject: emailDetails.subject,
             text: emailDetails.body,

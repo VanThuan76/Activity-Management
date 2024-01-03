@@ -50,10 +50,15 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
       icon: <ExpandAltOutlined />
     },
     {
+      label: 'Feedback',
+      key: 'feedback',
+      icon: <QuestionCircleOutlined />
+    },
+    {
       label: 'FAQ',
       key: 'faq',
       icon: <QuestionCircleOutlined />
-    }
+    },
   ]
   useEffect(() => {
     const key = getCookie(APP_SAVE_KEYS.KEYS)

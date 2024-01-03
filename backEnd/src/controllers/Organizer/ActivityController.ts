@@ -94,9 +94,16 @@ export const updateActivity = async (
       const newSkills = req.body.skills;
       if (activity && activity.creator === organizerId) {
         const updatedActivity = {
+          creator: organizerId as number,
           name: req.body.name as string,
           description: req.body.description as string,
           location: req.body.location as string,
+          num_of_volunteers: 0,
+          max_of_volunteers: req.body.max_of_volunteers,
+          image: req.body.image as string,
+          status: req.body.status,
+          from_at: req.body.from_at,
+          to_at: req.body.to_at,
           updated_at: new Date(),
         };
 

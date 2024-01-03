@@ -16,14 +16,14 @@ import { applyVolunteer, cancelApplyActivity } from "../controllers/ActivityAppl
 import { listApplyVolunteers, updateApplyVolunteer } from "../controllers/Organizer/ActivityApplyController";
 import { createSkill, deleteSkill, updateSkill } from "../controllers/Admin/SkillController";
 import { getSkillById, listSkills } from "../controllers/SkillController";
-import { newFeedBack } from "../controllers/FeedbackController";
+import { listFeedBackNoAuth, newFeedBack } from "../controllers/FeedbackController";
 import { createFaq, deleteFaq, updateFaq } from "../controllers/Admin/FaqController";
 import { getFaqById, listFaq } from "../controllers/FaqController";
 import { listActivitesBySkills } from "../controllers/SkillActivitesController";
 import { listFeedBack } from "../controllers/Admin/FeedbackController";
 import { listFeedBackByOrganizer } from "../controllers/Organizer/FeedbackController";
 import { deleteActivityByAdmin } from "../controllers/Admin/ActivityController";
-import { getVolunteer } from "../controllers/Organizer/VolunteerController";
+import { getVolunteer, removeVolunteer } from "../controllers/Organizer/VolunteerController";
 
 const router = express.Router();
 //Auth
@@ -69,7 +69,8 @@ router.post("/api/v1/reset_password", resetPassword);
     router.put("/api/v1/organizer/update_applied_volunteer", authenticateToken, checkRoleOrganizer, updateApplyVolunteer);
     //Volunteers
     router.get("/api/v1/organizer/volunteers", authenticateToken, checkRoleOrganizer, getVolunteer)
-//User
+    router.delete("/api/v1/organizer/volunteers/:id", authenticateToken, checkRoleOrganizer, removeVolunteer);
+    //User
 router.put("/api/v1/user", authenticateToken, updateProfile);
 router.get("/api/v1/user", authenticateToken, detailUser);
 //Organization
@@ -88,6 +89,7 @@ router.get("/api/v1/skills", listSkills);
 router.get("/api/v1/skills/:id", getSkillById);
 //Feedback
 router.post("/api/v1/feedback", newFeedBack);
+router.get("/api/v1/feedback", listFeedBackNoAuth);
 //Request Join in Activity By Volunteer
 router.post("/api/v1/apply_volunteer", authenticateToken, applyVolunteer);
 router.post("/api/v1/cancel_volunteer", authenticateToken, cancelApplyActivity);

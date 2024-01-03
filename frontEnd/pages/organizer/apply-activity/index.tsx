@@ -9,9 +9,7 @@ import { activityService } from '@/services/activity.service'
 import { IAppliedVolunteer } from '@/typeDefs/schema/activity.type'
 import { useAppSelector } from '@/hooks/useRedux'
 
-type Props = {}
-
-const ApplyActivityManagement = ({}: Props) => {
+const ApplyActivityManagement = () => {
   const { user } = useAppSelector(state => state.appSlice)
   const { data: dataActivity } = useQuery(['listActivity'], () => activityService.getAllActivity(), {
     select(data) {
@@ -50,6 +48,20 @@ const ApplyActivityManagement = ({}: Props) => {
       message.error('Cập nhật không thành công')
     }
   })
+  let filterActivityByName: { text: string; value: string }[] = []
+
+  if (dataApplyActivity) {
+    filterActivityByName = dataApplyActivity.map(item => ({
+      text: item.activity!.name,
+      value: item.activity!.name
+    }))
+  } else {
+    filterActivityByName.push({
+      text: '',
+      value: ''
+    })
+  }
+
   const columns: ColumnType<IAppliedVolunteer>[] = [
     {
       title: '#',
@@ -74,7 +86,10 @@ const ApplyActivityManagement = ({}: Props) => {
     {
       title: 'Tên hoạt động',
       dataIndex: 'name_organizer',
-      render: (_, record) => <p>{record.activity?.name}</p>
+      filters: filterActivityByName,
+      render: (_, record) => <p>{record.activity?.name}</p>,
+      // @ts-ignore
+      onFilter: (value: string, record) => record.activity?.name.indexOf(value) === 0,
     },
     {
       title: 'Trạng thái',

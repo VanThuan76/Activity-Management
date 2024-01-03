@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import { GeneralResponse, commonResponse } from "../utilities/CommonResponse";
 import { Users } from "../models/users";
 import { Feedback } from "../models/feedback";
+import { feedbackMapper } from "../mapper/FeedbackMapper";
 dotenv.config();
 const secretKey = process.env.SECRETKEY as string;
 
@@ -34,6 +35,7 @@ export const newFeedBack = async (
         activity_id: req.body.activity_id as number,
         title: req.body.title as string,
         content: req.body.content as string,
+        rate: req.body.rate as number,
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -52,6 +54,7 @@ export const newFeedBack = async (
         activity_id: NaN,
         title: req.body.title as string,
         content: req.body.content as string,
+        rate: req.body.rate as number,
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -64,6 +67,43 @@ export const newFeedBack = async (
         };
         commonResponse(req, res, response);
       }
+    }
+  } catch (error: any) {
+    console.error(error);
+    const response: GeneralResponse<{}> = {
+      status: 400,
+      data: null,
+      message: error.message,
+    };
+    commonResponse(req, res, response);
+  }
+};
+
+export const listFeedBackNoAuth = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const feedbacksCurrent = await Feedback.findAll({
+      where: { activity_id: undefined },
+    });
+    const feedbacks = await feedbackMapper(feedbacksCurrent); // Sử dụng hàm mapper
+    if (feedbacks.length > 0) {
+      const response: GeneralResponse<{
+        feedbacks: any;
+      }> = {
+        status: 200,
+        data: { feedbacks },
+        message: "Get list feedback successfully",
+      };
+      commonResponse(req, res, response);
+    } else {
+      const response: GeneralResponse<{}> = {
+        status: 200,
+        data: [],
+        message: "Get list feedback successfully",
+      };
+      commonResponse(req, res, response);
     }
   } catch (error: any) {
     console.error(error);

@@ -27,6 +27,9 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm()
   const [imageUrrl, setImageUrrl] = useState<string | undefined>()
   const isEditIdValidNumber = typeof editId === 'number'
+  const { data } = useQuery(['activity'], () => activityService.getActivityById(editId as number), {
+    enabled: isEditIdValidNumber
+  })
   const { data: skills } = useQuery(['skills'], () => skillService.getAllSkill(), {
     select(data) {
       const result = data.data.data
@@ -38,20 +41,12 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
       return res
     }
   })
-  const { data: skillsEdit } = useQuery(['skillsEdit'], () => skillService.getAllSkill(), {
-    select(data) {
-      const result = data.data.data
-      if (!result) return
-      const res = result.skills
-        .filter(skill => skill.id === editId)
-        .map(skill => ({
-          label: skill.name,
-          value: skill.id
-        }))
-      return res
-    }
-  })
-  const [skillsDefault, setSkillsDefault] = useState<any[] | undefined>(skillsEdit)
+  const [skillsDefault, setSkillsDefault] = useState<any[] | undefined>(
+    data?.data.data.skillsActivity?.map(skill => ({
+      label: skill.name,
+      value: skill.id
+    }))
+  )
   const newMutation = useMutation({
     mutationKey: 'NewActivity',
     mutationFn: (body: { name: string; description: string; location: string; skills: string[] }) =>
@@ -89,12 +84,15 @@ const FormActivity = ({ editId, open, setOpen, refetch }: Props) => {
       newMutation.mutate(value)
     }
   }
-  const { data } = useQuery(['activity'], () => activityService.getActivityById(editId as number), {
-    enabled: isEditIdValidNumber
-  })
   useEffect(() => {
     if (editId && data) {
       setImageUrrl(data.data.data.image)
+      setSkillsDefault(
+        data.data.data.skillsActivity?.map(skill => ({
+          label: skill.name,
+          value: skill.id
+        }))
+      )
       form.setFieldsValue({
         ...data.data.data
       })

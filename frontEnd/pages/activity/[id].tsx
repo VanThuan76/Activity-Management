@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next/types'
 import { IBaseResponse } from '@/typeDefs/baseReponse.type'
 import { IActivity } from '@/typeDefs/schema/activity.type'
 import BlankLayout from '@/layouts/BlankLayout'
-import { Button, Avatar, List, Badge, message, Form, Input, Card } from 'antd'
+import { Button, Avatar, List, Badge, message, Form, Input, Card, Space, Rate } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 import { activityService } from '@/services/activity.service'
 import { useAppSelector } from '@/hooks/useRedux'
@@ -16,6 +16,7 @@ type Props = {
   activity: IBaseResponse<IActivity>
 }
 const DetailActivity = ({ activity }: Props) => {
+  const [rate, setRate] = useState(0)
   const { data: userDetail } = useQuery(['userDetail'], () => userService.getUserByAuth(), {
     select(data) {
       return data.data.data.activityApplied
@@ -26,7 +27,8 @@ const DetailActivity = ({ activity }: Props) => {
   const { user } = useAppSelector(state => state.appSlice)
   const newFeedbackMutation = useMutation({
     mutationKey: 'newFeedback',
-    mutationFn: (body: { activity_id: number; title: string; content: string }) => feedbackService.newActivity(body),
+    mutationFn: (body: { activity_id: number; title: string; content: string; rate: number }) =>
+      feedbackService.newActivity(body),
     onSuccess(data, _variables, _context) {
       const res = data.data
       if (!res) return
@@ -68,7 +70,8 @@ const DetailActivity = ({ activity }: Props) => {
     const body = {
       activity_id: activity.data.id,
       title: value.title,
-      content: value.content
+      content: value.content,
+      rate: rate
     }
     newFeedbackMutation.mutate(body)
   }
@@ -99,13 +102,16 @@ const DetailActivity = ({ activity }: Props) => {
               <h3>Kỹ năng</h3>
               <div className='flex flex-wrap justify-start items-start gap-3'>
                 {activity.data.skillsActivity?.map((skill, index) => (
-                  <p key={index} className='border-2 border-blue-700'>
-                    {skill.name}
-                  </p>
+                  <Badge
+                    key={index}
+                    className='site-badge-count-109'
+                    count={skill.name}
+                    style={{ backgroundColor: '#52c41a' }}
+                  />
                 ))}
               </div>
             </div>
-            <h3 style={{whiteSpace: 'pre-line'}}>Nội dung: {activity.data.description}</h3>
+            <h3 style={{ whiteSpace: 'pre-line' }}>Nội dung: {activity.data.description}</h3>
             <div className='w-full flex justify-between items-center'>
               <p>Số lượng TN đã tham dự: {activity.data.num_of_volunteers}</p>
               <p>Số lượng TN tối đa: {activity.data.max_of_volunteers}</p>
@@ -163,6 +169,10 @@ const DetailActivity = ({ activity }: Props) => {
                 title={<span>{item.name}</span>}
                 description={
                   <div>
+                    <Space>
+                      <Rate disabled value={item.rate} />
+                      {rate ? <span>{[rate - 1]}</span> : ''}
+                    </Space>
                     <p>Tiêu đề: {item.title}</p>
                     <p>{item.content}</p>
                   </div>
@@ -171,7 +181,7 @@ const DetailActivity = ({ activity }: Props) => {
             </List.Item>
           )}
         />
-        {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id) ? (
+        {userDetail && userDetail.some((item: any) => item.activity_id === activity.data.id && item.status === 3) ? (
           <Card title='Feedback'>
             <Form
               name='newFeedback'
@@ -187,7 +197,10 @@ const DetailActivity = ({ activity }: Props) => {
               <Form.Item label='Nội dung' name='content' rules={[{ required: true, message: 'Chưa điền nội dung' }]}>
                 <Input />
               </Form.Item>
-
+              <Form.Item label='Đánh giá' name='rate'>
+                  <Rate onChange={setRate} value={rate} />
+                  {rate ? <span>{[rate - 1]}</span> : ''}
+              </Form.Item>
               <Form.Item style={{ textAlign: 'center' }}>
                 <Button htmlType='submit'>Bình luận</Button>
               </Form.Item>

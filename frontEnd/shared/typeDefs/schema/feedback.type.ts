@@ -10,6 +10,7 @@ export interface IFeedback {
   activity_id: number;
   title: string;
   content: string;
+  rate?: number;
   created_at?: any;
   updated_at?: any;
   name?: string

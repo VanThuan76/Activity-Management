@@ -11,6 +11,7 @@ export const feedbackMapper = async (feedbacks: FeedbackAttributes[]) => {
         activity_id,
         title,
         content,
+        rate,
         created_at,
         updated_at,
       } = feedback;
@@ -27,6 +28,7 @@ export const feedbackMapper = async (feedbacks: FeedbackAttributes[]) => {
           activity_id,
           title,
           content,
+          rate,
           created_at,
           updated_at,
           name: userName,

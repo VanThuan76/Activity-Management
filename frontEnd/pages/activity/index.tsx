@@ -1,14 +1,29 @@
 import { activityService } from '@/services/activity.service'
+import { IActivity } from '@/typeDefs/schema/activity.type'
 import { Avatar, Badge, Button, Card } from 'antd'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 const { Meta } = Card
 
 const ActivityPage = () => {
   const router = useRouter()
+  const [filterActivity, setFilterActivity] = useState<IActivity[] | undefined>()
   const { data: dataActivity, refetch } = useQuery(['listActivity'], () => activityService.getAllActivity())
+  useEffect(() => {
+    if (dataActivity && dataActivity.data && dataActivity.data.data.activities) {
+      const sortedActivities = [...dataActivity.data.data.activities].sort((a, b) => {
+        if (a.status === 0 && b.status !== 0) {
+          return -1
+        } else if (a.status !== 0 && b.status === 0) {
+          return 1
+        }
+        return 0
+      })
+      setFilterActivity(sortedActivities)
+    }
+  }, [dataActivity]) // Chỉ gọi lại khi dataActivity thay đổi
   return (
     <React.Fragment>
       <Head>
@@ -20,9 +35,8 @@ const ActivityPage = () => {
         Danh sách hoạt động
       </h1>
       <div className='w-full grid grid-cols-1 md:grid-cols-3 gap-5'>
-        {dataActivity &&
-          dataActivity.data &&
-          dataActivity.data.data.activities.map(item => (
+        {filterActivity &&
+          filterActivity.map(item => (
             <Card
               key={item.id}
               style={{ width: 400 }}

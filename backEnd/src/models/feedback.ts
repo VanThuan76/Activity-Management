@@ -9,6 +9,7 @@ export interface FeedbackAttributes {
   activity_id: number;
   title: string;
   content: string;
+  rate: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -24,6 +25,7 @@ class Feedback
   public activity_id!: number;
   public title!: string;
   public content!: string;
+  public rate!: number;
   public created_at!: Date;
   public updated_at!: Date;
   public readonly users?: Users[];
@@ -63,6 +65,10 @@ Feedback.init(
     },
     content: {
       type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    rate: {
+      type: new DataTypes.INTEGER,
       allowNull: false,
     },
     created_at: {
