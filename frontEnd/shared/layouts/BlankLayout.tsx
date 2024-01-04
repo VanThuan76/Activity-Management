@@ -15,6 +15,7 @@ import { APP_SAVE_KEYS } from '@/constant/AppConstant'
 import { useDispatch } from 'react-redux'
 import { login } from '@/store/appSlice'
 import jwt_decode from 'jwt-decode'
+import { activityService } from '@/services/activity.service'
 
 const { Header, Content, Footer } = Layout
 
@@ -68,7 +69,9 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
         dispatch(login({ userName: decodeData.username, role: decodeData.role_id, id: decodeData.id }))
     }
 }, [])
-
+  const handleSearch = (value: string) => {
+    router.push(`/activity?key=${value}`)
+  }
   return (
     <React.Fragment>
       <Header className='flex justify-between items-center bg-[#fff]'>
@@ -87,7 +90,7 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
           <Search
             className='col-span-1 bg-blue-300 rounded-lg'
             placeholder='Tìm kiếm'
-            onSearch={() => {}}
+            onSearch={handleSearch}
             enterButton
           />
           <div className='col-span-2 w-full flex justify-end items-center gap-4'>

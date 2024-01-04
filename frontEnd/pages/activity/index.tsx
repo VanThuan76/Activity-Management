@@ -9,21 +9,39 @@ const { Meta } = Card
 
 const ActivityPage = () => {
   const router = useRouter()
+  const { query } = router
+  const [key, setKey] = useState('')
   const [filterActivity, setFilterActivity] = useState<IActivity[] | undefined>()
+  const { data: dataActivitySearch, refetch: refetchSearch } = useQuery(
+    ['listActivitySearch'],
+    () => activityService.searchActivity(key as string),
+    { enabled: key !== "" }
+  )
   const { data: dataActivity, refetch } = useQuery(['listActivity'], () => activityService.getAllActivity())
   useEffect(() => {
-    if (dataActivity && dataActivity.data && dataActivity.data.data.activities) {
-      const sortedActivities = [...dataActivity.data.data.activities].sort((a, b) => {
-        if (a.status === 0 && b.status !== 0) {
-          return -1
-        } else if (a.status !== 0 && b.status === 0) {
-          return 1
-        }
-        return 0
-      })
-      setFilterActivity(sortedActivities)
+    const params = new URLSearchParams(window.location.search)
+    const keyValue = params.get('key')
+    setKey(keyValue || (query.key as string) || '')
+    refetchSearch()
+  }, [])
+  useEffect(() => {
+    if (key === "") {
+      if (dataActivity && dataActivity.data && dataActivity.data.data.activities) {
+        const sortedActivities = [...dataActivity.data.data.activities].sort((a, b) => {
+          if (a.status === 0 && b.status !== 0) {
+            return -1
+          } else if (a.status !== 0 && b.status === 0) {
+            return 1
+          }
+          return 0
+        })
+        setFilterActivity(sortedActivities)
+      }
+    } else {
+      refetchSearch()
+      setFilterActivity(dataActivitySearch?.data.data.activities)
     }
-  }, [dataActivity]) // Chỉ gọi lại khi dataActivity thay đổi
+  }, [dataActivity, key]) // Chỉ gọi lại khi dataActivity thay đổi
   return (
     <React.Fragment>
       <Head>

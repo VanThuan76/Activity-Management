@@ -7,6 +7,9 @@ class ActivityService {
   getAllActivity(): Promise<AxiosResponse<IBaseResponse<IActivityList>>> {
     return httpsNoToken.get('/activities')
   }
+  searchActivity(key: string): Promise<AxiosResponse<IBaseResponse<IActivityList>>> {
+    return httpsNoToken.get(`/search_activities?key=${key}`)
+  }
   applyActivity(body: { activity_id: number }) {
     return https.post('/apply_volunteer', body)
   }

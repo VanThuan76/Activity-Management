@@ -117,8 +117,40 @@ export const updateApplyVolunteer = async (
             }
           }
         }
-      } else {
+      } else if (checkStatus === 2) {
         const body = { status: 2, updated_at: new Date() };
+        const volunteerRequestRecord = await ActivityApply.findOne({
+          where: { user_id: volunteerId },
+        });
+        if (volunteerRequestRecord) {
+          const result = await volunteerRequestRecord.update(body);
+          if (result) {
+            const response: GeneralResponse<{}> = {
+              status: 200,
+              data: null,
+              message: "Update successfully",
+            };
+            commonResponse(req, res, response);
+          }
+        }
+      }else if(checkStatus === 3 ) {
+        const body = { status: 3, updated_at: new Date() };
+        const volunteerRequestRecord = await ActivityApply.findOne({
+          where: { user_id: volunteerId },
+        });
+        if (volunteerRequestRecord) {
+          const result = await volunteerRequestRecord.update(body);
+          if (result) {
+            const response: GeneralResponse<{}> = {
+              status: 200,
+              data: null,
+              message: "Update successfully",
+            };
+            commonResponse(req, res, response);
+          }
+        }
+      }else{
+        const body = { status: 4, updated_at: new Date() };
         const volunteerRequestRecord = await ActivityApply.findOne({
           where: { user_id: volunteerId },
         });

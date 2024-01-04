@@ -1,4 +1,4 @@
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { Col, message, Popconfirm, Row, Space, Table } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { ColumnType } from 'antd/lib/table'
@@ -89,7 +89,7 @@ const ApplyActivityManagement = () => {
       filters: filterActivityByName,
       render: (_, record) => <p>{record.activity?.name}</p>,
       // @ts-ignore
-      onFilter: (value: string, record) => record.activity?.name.indexOf(value) === 0,
+      onFilter: (value: string, record) => record.activity?.name.indexOf(value) === 0
     },
     {
       title: 'Trạng thái',
@@ -140,6 +140,32 @@ const ApplyActivityManagement = () => {
                 title={'Từ chối'}
               >
                 <CloseOutlined className='cursor-pointer'></CloseOutlined>
+              </Popconfirm>
+              <Popconfirm
+                okButtonProps={{ loading: updateMutation.isLoading }}
+                onConfirm={() => {
+                  const body = {
+                    user_id: record.user_id,
+                    status: 3
+                  }
+                  updateMutation.mutate(body)
+                }}
+                title={'Đã tham gia'}
+              >
+                <CheckCircleOutlined className='cursor-pointer'></CheckCircleOutlined>
+              </Popconfirm>
+              <Popconfirm
+                okButtonProps={{ loading: updateMutation.isLoading }}
+                onConfirm={() => {
+                  const body = {
+                    user_id: record.user_id,
+                    status: 4
+                  }
+                  updateMutation.mutate(body)
+                }}
+                title={'Không tham gia'}
+              >
+                <ExclamationCircleOutlined className='cursor-pointer'></ExclamationCircleOutlined>
               </Popconfirm>
             </>
           ) : (
