@@ -144,3 +144,86 @@ export const searchActivities = async (req: Request, res: Response) => {
   }
 };
 
+export const searchMultipleActivities = async (req: Request, res: Response) => {
+  try {
+    const { name, address, skills, orgainzer, date } = req.body;
+    let activities;
+    if (name) {
+      activities = await Activities.findAll({
+        where: {
+          name: {
+            [Op.like]: `%${name.toLowerCase()}%`,
+          },
+        },
+      });
+    }
+    if (address) {
+      activities = await Activities.findAll({
+        where: {
+          location: {
+            [Op.like]: `%${address.toLowerCase()}%`,
+          },
+        },
+      });
+    }
+    if (date) {
+      if (date.from_at && date.to_at) {
+        activities = await Activities.findAll({
+          where: {
+            from_at: {
+              [Op.between]: [date.from_at, date.to_at],
+            },
+          },
+        });
+      } else if (date.from_at) {
+        activities = await Activities.findAll({
+          where: {
+            from_at: {
+              [Op.gte]: date.from_at,
+            },
+          },
+        });
+      } else if (date.to_at) {
+        activities = await Activities.findAll({
+          where: {
+            to_at: {
+              [Op.lte]: date.to_at,
+            },
+          },
+        });
+      }
+    }
+    if (skills && skills.length > 0) {
+      const skillIds = skills.map((skill: any) => +skill);
+      const skillActivities = await SkillActivities.findAll({
+        where: {
+          skill_id: skillIds,
+        },
+      });
+      const skillActivitiesIds = skillActivities.map(
+        (skillActivity) => skillActivity.activity_id
+      );
+      activities = await Activities.findAll({
+        where: {
+          id: skillActivitiesIds,
+        },
+      });
+    }
+    if (orgainzer) {
+      activities = await Activities.findAll({
+        where: {
+          creator: orgainzer,
+        },
+      });
+    }
+    const response = {
+      status: 200,
+      data: { activities },
+      message: "Search activities successfully",
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

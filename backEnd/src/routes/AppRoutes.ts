@@ -10,7 +10,7 @@ import { requestOrganization } from "../controllers/RequestOrganizationControlle
 import { listRequestOrganization, updateRequestOrganization } from "../controllers/Admin/RequestOrganizationController";
 import { requestVolunteer } from "../controllers/RequestVolunteerController";
 import { listRequestVolunteers, updateRequestVolunteer } from "../controllers/Organizer/RequestVolunteerController";
-import { detailActivity, listActivity, searchActivities } from "../controllers/ActivityController";
+import { detailActivity, listActivity, searchActivities, searchMultipleActivities } from "../controllers/ActivityController";
 import { createActivity, deleteActivity, updateActivity } from "../controllers/Organizer/ActivityController";
 import { applyVolunteer, cancelApplyActivity } from "../controllers/ActivityApplyController";
 import { listApplyVolunteers, updateApplyVolunteer } from "../controllers/Organizer/ActivityApplyController";
@@ -82,6 +82,7 @@ router.post("/api/v1/request_organization", authenticateToken, requestOrganizati
 //Activity
 router.get("/api/v1/activities", listActivity);
 router.get("/api/v1/search_activities", searchActivities);
+router.post("/api/v1/search_multiple_activities", searchMultipleActivities);
 router.get("/api/v1/activities/:id", detailActivity);
 router.post("/api/v1/activities_by_skill", listActivitesBySkills);
 //Skill

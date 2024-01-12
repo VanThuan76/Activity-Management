@@ -51,10 +51,19 @@ const ApplyActivityManagement = () => {
   let filterActivityByName: { text: string; value: string }[] = []
 
   if (dataApplyActivity) {
-    filterActivityByName = dataApplyActivity.map(item => ({
-      text: item.activity!.name,
-      value: item.activity!.name
-    }))
+    const uniqueNamesSet = new Set()
+
+    const uniqueFilterActivityByName = dataApplyActivity
+      .map(item => ({
+        text: item.activity!.name,
+        value: item.activity!.name
+      }))
+      .filter(item => {
+        const isUnique = !uniqueNamesSet.has(item.value)
+        uniqueNamesSet.add(item.value)
+        return isUnique
+      })
+    filterActivityByName = uniqueFilterActivityByName
   } else {
     filterActivityByName.push({
       text: '',
