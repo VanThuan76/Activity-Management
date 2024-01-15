@@ -12,7 +12,7 @@ import { requestVolunteer } from "../controllers/RequestVolunteerController";
 import { listRequestVolunteers, updateRequestVolunteer } from "../controllers/Organizer/RequestVolunteerController";
 import { detailActivity, listActivity, searchActivities, searchMultipleActivities } from "../controllers/ActivityController";
 import { createActivity, deleteActivity, updateActivity } from "../controllers/Organizer/ActivityController";
-import { applyVolunteer, cancelApplyActivity } from "../controllers/ActivityApplyController";
+import { applyVolunteer, cancelApplyActivity, listApplyActivity } from "../controllers/ActivityApplyController";
 import { listApplyVolunteers, updateApplyVolunteer } from "../controllers/Organizer/ActivityApplyController";
 import { createSkill, deleteSkill, updateSkill } from "../controllers/Admin/SkillController";
 import { getSkillById, listSkills } from "../controllers/SkillController";
@@ -92,6 +92,7 @@ router.get("/api/v1/skills/:id", getSkillById);
 router.post("/api/v1/feedback", newFeedBack);
 router.get("/api/v1/feedback", listFeedBackNoAuth);
 //Request Join in Activity By Volunteer
+router.get("/api/v1/apply_activity", authenticateToken, listApplyActivity);
 router.post("/api/v1/apply_volunteer", authenticateToken, applyVolunteer);
 router.post("/api/v1/cancel_volunteer", authenticateToken, cancelApplyActivity);
 //Request Join In Orgainzation By Volunteer

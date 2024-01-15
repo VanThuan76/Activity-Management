@@ -21,6 +21,9 @@ class ActivityService {
   applyActivity(body: { activity_id: number }) {
     return https.post('/apply_volunteer', body)
   }
+  listApplyActivity(): Promise<AxiosResponse<IBaseResponse<IAppliedVolunteers>>> {
+    return https.get('/apply_activity')
+  }
   cancelActivity(body: { activity_id: number }) {
     return https.post('/cancel_volunteer', body)
   }

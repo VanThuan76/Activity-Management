@@ -2,13 +2,14 @@ import { activityService } from '@/services/activity.service'
 import { organizationService } from '@/services/organization.service'
 import { skillService } from '@/services/skill.service'
 import { IActivity } from '@/typeDefs/schema/activity.type'
-import { Avatar, Badge, Button, Card, DatePicker, Form, Input, message, Select } from 'antd'
+import { Avatar, Badge, Button, Card, DatePicker, Form, Input, message, Pagination, Select } from 'antd'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { useForm } from 'antd/lib/form/Form'
 import { convertDate } from '@/utils/convertDate'
+import ListActivityFull from '@/components/ListActivityFull'
 const { Meta } = Card
 const { RangePicker } = DatePicker
 
@@ -84,7 +85,6 @@ const ActivityPage = () => {
       message.error('Tìm kiếm không thành công')
     }
   })
-  console.log(filterActivity)
   const handleFilter = (value: any) => {
     const queryParams: { [key: string]: string } = {}
     if (value.name) {
@@ -104,7 +104,10 @@ const ActivityPage = () => {
       name: value.name,
       address: value.address,
       orgainzer: value.orgainzer,
-      date: { from_at: value.date && convertDate(value.date[0].$d), to_at: value.date && convertDate(value.date[1].$d) },
+      date: {
+        from_at: value.date && convertDate(value.date[0].$d),
+        to_at: value.date && convertDate(value.date[1].$d)
+      },
       skills: value.skills
     }
     filterActivityMute.mutate(body)
@@ -151,7 +154,7 @@ const ActivityPage = () => {
           </Form.Item>
         </Form>
       </div>
-      <div className='w-full grid grid-cols-1 md:grid-cols-3 gap-5'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-3 gap-5 mb-4'>
         {filterActivity &&
           filterActivity.map(item => (
             <Card
@@ -180,6 +183,19 @@ const ActivityPage = () => {
               />
             </Card>
           ))}
+      </div>
+      <Pagination
+        onChange={value =>
+          setFilterActivity(
+            dataActivity?.data.data.activities.slice(0, dataActivity?.data.data.activities?.length / value)
+          )
+        }
+        defaultCurrent={1}
+        total={dataActivity?.data.data.activities.length}
+      />
+      <div>
+        <h1>Danh sách hoạt động full</h1>
+        <ListActivityFull></ListActivityFull>
       </div>
     </React.Fragment>
   )

@@ -29,7 +29,7 @@ const ActivityManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -154,7 +154,9 @@ const ActivityManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataActivity} columns={columns} scroll={{ x: 'max-content' }} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataActivity} columns={columns} scroll={{ x: 'max-content' }} />
           {action === 'create' && !rowId ? (
             <FormActivity refetch={refetch} open={open} setOpen={setOpen} />
           ) : (

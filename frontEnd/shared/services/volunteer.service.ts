@@ -10,7 +10,7 @@ class VolunteerService {
   updateRequestVolunteer(body: { user_id: number; status: number }) {
     return https.put('/organizer/update_request_volunteer', body)
   }
-  getVolunteerGroupOrganizer(): Promise<AxiosResponse<IBaseResponse<IVolunteerGroupOrganizer>>> {
+  getVolunteerGroupOrganizer(): Promise<AxiosResponse<IBaseResponse<IVolunteerGroupOrganizer[]>>> {
     return https.get('/organizer/volunteers')
   }
   removeVolunteerByOrganizer({ id }: { id: number }) {

@@ -33,7 +33,7 @@ const VolunteersManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -100,7 +100,9 @@ const VolunteersManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataVolunteer.data.data as any} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataVolunteer.data.data as any} columns={columns} />
         </React.Fragment>
       )}
     </>

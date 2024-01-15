@@ -23,8 +23,8 @@ const SiderMenu = () => {
   const router = useRouter()
   const menuAdmin = [
     {
-      key: '/',
-      label: 'Trang chủ',
+      key: '/admin',
+      label: 'Thống kê',
       icon: <HomeOutlined />
     },
     {
@@ -72,8 +72,8 @@ const SiderMenu = () => {
   ]
   const menuOrganizer = [
     {
-      key: '/',
-      label: 'Trang chủ',
+      key: '/organizer',
+      label: 'Thống kê',
       icon: <HomeOutlined />
     },
     {

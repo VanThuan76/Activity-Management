@@ -101,7 +101,10 @@ function BlankLayout({ children }: { children: React.ReactNode }) {
               <Button onClick={() => router.push('/organizer/activity')}>TỔ CHỨC</Button>
             )}
             {user && Number(user?.role) === 1 && (
+              <>
+              <Button onClick={() => router.push('/dashboard')}>Thống kê</Button>
               <Button onClick={() => router.push('/request_organization')}>Trở thành tổ chức</Button>
+              </>
             )}
             {user && <Button onClick={() => handleLogout()}>Đăng xuất</Button>}
           </div>

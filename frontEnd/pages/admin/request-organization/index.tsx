@@ -33,7 +33,7 @@ const RequestOrganizationManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -115,7 +115,9 @@ const RequestOrganizationManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataRequestOrganization.data.data.requestOrganizations} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataRequestOrganization.data.data.requestOrganizations} columns={columns} />
         </React.Fragment>
       )}
     </>

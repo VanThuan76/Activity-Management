@@ -34,7 +34,7 @@ const UserManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -100,7 +100,9 @@ const UserManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataUser.data.data.users} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataUser.data.data.users} columns={columns} />
           {action === 'create' && !rowId ? (
             <FormUser refetch={refetch} open={open} setOpen={setOpen} />
           ) : (

@@ -29,7 +29,7 @@ const ActivityManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -95,7 +95,9 @@ const ActivityManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataActivity.data.data.activities} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataActivity.data.data.activities} columns={columns} />
         </React.Fragment>
       )}
     </>

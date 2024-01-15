@@ -33,7 +33,7 @@ const FAQManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -109,7 +109,13 @@ const FAQManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataFaq.data.data.faqs} columns={columns} />
+          <Table
+            pagination={{
+              pageSize: 6
+            }}
+            dataSource={dataFaq.data.data.faqs}
+            columns={columns}
+          />
           {action === 'create' && !rowId ? (
             <FormFaq refetch={refetch} open={open} setOpen={setOpen} />
           ) : (

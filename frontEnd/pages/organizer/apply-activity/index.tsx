@@ -77,7 +77,7 @@ const ApplyActivityManagement = () => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -199,7 +199,9 @@ const ApplyActivityManagement = () => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataApplyActivity} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataApplyActivity} columns={columns} />
         </React.Fragment>
       )}
     </>

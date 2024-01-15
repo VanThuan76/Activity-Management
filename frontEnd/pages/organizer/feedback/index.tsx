@@ -30,7 +30,7 @@ const FeedbackManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -92,7 +92,9 @@ const FeedbackManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataFeedback.data.data.feedbacks} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataFeedback.data.data.feedbacks} columns={columns} />
         </React.Fragment>
       )}
     </>

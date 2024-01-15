@@ -35,7 +35,7 @@ const OrganizationManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -112,7 +112,9 @@ const OrganizationManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataOrganization.data.data.organizations} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataOrganization.data.data.organizations} columns={columns} />
           <FormOrganization refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
         </React.Fragment>
       )}

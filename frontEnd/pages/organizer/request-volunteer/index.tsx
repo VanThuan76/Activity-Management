@@ -31,7 +31,7 @@ const RequestVolunteerManagement = ({}: Props) => {
       key: 'id',
       render: (value, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{record.id}</p>
         </div>
       )
     },
@@ -110,7 +110,9 @@ const RequestVolunteerManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataRequestVolunteers.data.data.requestVolunteers.filter(volunteer => volunteer.status !== 0)} columns={columns} />
+          <Table pagination={{
+              pageSize: 6
+            }} dataSource={dataRequestVolunteers.data.data.requestVolunteers.filter(volunteer => volunteer.status !== 0)} columns={columns} />
         </React.Fragment>
       )}
     </>
